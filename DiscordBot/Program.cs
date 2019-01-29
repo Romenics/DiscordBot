@@ -31,6 +31,20 @@ namespace DiscordBot {
 					await e.Message.RespondAsync("pong!");
 			};
 
+			//Roll Dice
+			discord.MessageCreated += async e => {
+				if (e.Message.Content.ToLower().StartsWith("d")) {
+					int dice = 0;
+					if (int.TryParse (e.Message.Content.TrimStart('d'), out dice) == true) {
+						dice = RollDice (dice);
+						await e.Message.RespondAsync ("Rolled " + dice);
+					}
+					else {
+						await e.Message.RespondAsync ("Input error");
+					}
+				}
+			};
+
 			//Restore deleting message
 			discord.MessageDeleted += async e => {
 				string Respond = e.Message.Author.Username +" пытается удалить  " + e.Message.Content + "\n";
@@ -55,13 +69,13 @@ namespace DiscordBot {
 					await e.Message.RespondAsync (Respond);
 				}
 
-				System.Collections.Generic.IReadOnlyList<DSharpPlus.Entities.DiscordConnection> x = await e.Client.ge discord.GetConnectionsAsync ();
-				for (int i = 0; i < x.Count; i++) {
-					Console.WriteLine ("Get connection");
-					if (x[i].Id == 370315299968516114) {
-
-					}
-				}
+				//System.Collections.Generic.IReadOnlyList<DSharpPlus.Entities.DiscordConnection> x = await e.Client.ge discord.GetConnectionsAsync ();
+				//for (int i = 0; i < x.Count; i++) {
+				//	Console.WriteLine ("Get connection");
+				//	if (x[i].Id == 370315299968516114) {
+				//
+				//	}
+				//}
 			};
 			
 			discord.ChannelUpdated += async e => {
@@ -102,6 +116,12 @@ namespace DiscordBot {
 
 		public static void StartEvent (object source, System.Timers.ElapsedEventArgs e) {
 
+		}
+
+		public static int RollDice (int Side) {
+			Random rand = new Random();
+			Console.WriteLine ("Random " + rand.Next (1, Side));
+			return rand.Next (1, Side);
 		}
 	}
 }
