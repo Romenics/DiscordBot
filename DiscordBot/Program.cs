@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -9,7 +10,7 @@ namespace DiscordBot {
 
 	public class Program {
 		
-		static DiscordClient discord;
+		public static DiscordClient discord;
 
 		static CommandsNextModule commands;
 
@@ -44,11 +45,17 @@ namespace DiscordBot {
 			commands.RegisterCommands <MyCommands> ();
 			Console.WriteLine ("Bot staterted");
 
+			
+			//Detecting new message
+			discord.MessageCreated += async e => {
+				await Task.Delay(0);
+			};
+
 
 			//Restore deleting message
 			discord.MessageDeleted += async e => {
 				LastDeletedMessage = e.Message.Content;
-				await e.Message.RespondAsync ();
+				await Task.Delay(0);
 			};
 
 			//Working when readction added
@@ -72,8 +79,14 @@ namespace DiscordBot {
 					await e.Message.RespondAsync (Respond);
 				}
 			}
-			
 			await discord.ConnectAsync();
+			
+			//while(true) {
+			//	string Message = Console.ReadLine ();
+			//	DSharpPlus.Entities.DiscordChannel channel = await discord.GetChannelAsync (439527469897351178);//NSFW Science 439527469897351178 //Bot log 530096997726945317
+			//	await discord.SendMessageAsync (channel, Message);
+			//}
+
 			await Task.Delay(-1);
 		}
 	}

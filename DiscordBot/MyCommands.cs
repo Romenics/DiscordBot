@@ -22,7 +22,7 @@ namespace DiscordBot {
 		[Command ("Help")]
 		public async Task Help (CommandContext context) {
 			string Respond = 
-			"```Commands: \n Help \n Ping \n Invite \n d \n Choose```";
+			"```Commands: \n Help \n Ping \n Invite \n d \n Choose \n ShowChannels \n ```";
 			await context.RespondAsync (Respond);
 		}
 
@@ -43,5 +43,37 @@ namespace DiscordBot {
 			await context.RespondAsync (Respond);
 		}
 		
+		[Command ("ShowChannels")]
+		public async Task ShowChannels (CommandContext context) {
+			string Respond = "Server name: " + context.Guild.Name + "\n";
+			Respond += context.Guild.Owner.Mention + "is owner \n";
+
+			IReadOnlyList<DSharpPlus.Entities.DiscordChannel> AllChannels = context.Guild.Channels;
+			for (int i = 0; i < AllChannels.Count; i++) {
+				Respond += AllChannels[i].Name +" is " + AllChannels[i].Topic + "\n";
+			}
+			await context.RespondAsync (Respond);
+		}
+
+		[Command ("ShowServers")]
+		public async Task ShowServers (CommandContext context) {
+			string Respond = "";
+
+
+
+			Console.WriteLine ("Wow");
+			IReadOnlyDictionary <ulong, DSharpPlus.Entities.DiscordGuild> allGuilds = Program.discord.Guilds;
+			Console.WriteLine (allGuilds.Count);
+
+			foreach (DSharpPlus.Entities.DiscordGuild each in allGuilds.Values) {
+				Respond += each.Name + " owner " + each.Owner.Nickname + " with " + each.MemberCount + " people \n";
+			}
+			await context.RespondAsync (Respond);
+		}
+
+		[Command ("Reverse")]
+		public async Task Reverse (CommandContext context) {
+			await context.RespondAsync (Program.LastDeletedMessage);
+		}
 	}
 }
