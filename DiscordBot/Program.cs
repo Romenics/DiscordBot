@@ -61,6 +61,7 @@ namespace DiscordBot {
 			//Working when readction added
 			discord.MessageReactionAdded += TumbUp;
 			discord.MessageReactionAdded += Clock;
+			discord.MessageReactionAdded += Permission;
 			
 			async Task TumbUp (MessageReactionAddEventArgs e) {
 
@@ -80,12 +81,19 @@ namespace DiscordBot {
 				}
 			}
 			await discord.ConnectAsync();
-			
-			//while(true) {
-			//	string Message = Console.ReadLine ();
-			//	DSharpPlus.Entities.DiscordChannel channel = await discord.GetChannelAsync (439527469897351178);//NSFW Science 439527469897351178 //Bot log 530096997726945317
-			//	await discord.SendMessageAsync (channel, Message);
-			//}
+
+			async Task Permission (MessageReactionAddEventArgs e) {
+
+				if (e.Emoji.Name == "🔫") {
+					await e.Message.RespondAsync (e.Message.Author.Username + " расстрелян");
+				}
+			}
+
+			while(true) {
+				string Message = Console.ReadLine ();
+				DSharpPlus.Entities.DiscordChannel channel = await discord.GetChannelAsync (292562693993529349);//NSFW Science 439527469897351178 //Bot log 530096997726945317
+				await discord.SendMessageAsync (channel, Message);
+			}
 
 			await Task.Delay(-1);
 		}
