@@ -175,7 +175,7 @@ namespace DiscordBot {
 
 		[Command("набор")]
 		public async Task Nabor (CommandContext context) {
-			string Respond = e.Message.Author.Mention + "**раскидывает набор**\n";
+			string Respond = e.Message.Author.Mention + "** раскидывает набор**\n";
 			
 			Random GreenDie = new Random ();
 			Random RedDie = new Random ();
