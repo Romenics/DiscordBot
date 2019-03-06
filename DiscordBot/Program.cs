@@ -131,6 +131,7 @@ namespace DiscordBot {
 						}
 					}
 					await e.Message.RespondAsync (Respond);
+					await e.Message.DeleteAsync ();
 				}
 			}
 
