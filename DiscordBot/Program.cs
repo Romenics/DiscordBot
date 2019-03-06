@@ -111,7 +111,7 @@ namespace DiscordBot {
 					RedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Second + ":").ToString();
 
 					if (Message.Length == 1) {
-						Respond = "🎲 " + e.Message.Author.Mention + " rolled " + GreenDie + " " + RedDie + " result *" + (First - Second) + "*";
+						Respond = "🎲 " + e.Message.Author.Mention + " rolled " + GreenDie + " " + RedDie + " result **" + (First - Second) + "**";
 					}
 					else {
 						int Side = 0;
@@ -120,7 +120,7 @@ namespace DiscordBot {
 							if (int.TryParse (Message.Remove (0,2), out Side) == true) {
 								Random random  = new Random ();
 								int Result = random.Next (1, Side);
-								Respond = "🎲 " + e.Message.Author.Mention + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second - Side) + "*";
+								Respond = "🎲 " + e.Message.Author.Mention + " rolled " + GreenDie + " and " + RedDie + " result **" + (First - Second - Side) + "**";
 							}
 						}
 						else {
@@ -131,7 +131,7 @@ namespace DiscordBot {
 								if (Side > 1) {
 									Result = random.Next (1, Side);
 								}
-								Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second + Side) + "*";
+								Respond = "🎲 " + e.Message.Author.Username + " rolled: " + GreenDie + " and " + RedDie + " result **" + (First - Second + Side) + "**";
 							}
 						}
 					}
