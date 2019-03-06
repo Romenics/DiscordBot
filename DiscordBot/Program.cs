@@ -46,33 +46,6 @@ namespace DiscordBot {
 			MyCommands.FillList ();
 			Console.WriteLine ("Bot staterted");
 
-			
-			//Detecting new message
-			discord.MessageCreated += async e => {
-
-				string Message = e.Message.Content.ToLower();
-
-				if (Message[0] == 'd') {
-					string Respond = "";
-
-					if (Message.Length == 1) {
-						Random FirstD6  = new Random ();
-						Random SecondD6 = new Random ();
-						int First  = FirstD6 .Next (1,7);
-						int Second = SecondD6.Next (1,7);
-						Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second) + "*";
-					}
-					else {
-						int Side = 0;
-						if (int.TryParse (Message.Remove (0,1), out Side) == true) {
-							Random random  = new Random ();
-							int Result = random.Next (1, Side);
-							Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + Result + "*";
-						}
-					}
-					await e.Message.RespondAsync (Respond);
-				}
-			};
 
 
 			//Restore deleting message
@@ -85,6 +58,7 @@ namespace DiscordBot {
 			discord.MessageReactionAdded += TumbUp;
 			discord.MessageReactionAdded += Clock;
 			discord.MessageReactionAdded += Permission;
+			discord.MessageCreated		 += StatCheck;
 			
 			async Task TumbUp (MessageReactionAddEventArgs e) {
 
@@ -112,6 +86,49 @@ namespace DiscordBot {
 				}
 			}
 
+			async Task StatCheck (MessageCreateEventArgs e) {
+
+				string Message = e.Message.Content.ToLower();
+
+				if (Message[0] == 'd') {
+
+					string Respond = "";
+					//Бросаем 2 d6 
+					Random FirstD6  = new Random ();
+					Random SecondD6 = new Random ();
+					int First  = FirstD6 .Next (1,7);
+					int Second = SecondD6.Next (1,7);
+
+					if (Message.Length == 1) {
+						Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second) + "*";
+					}
+					else {
+						int Side = 0;
+
+						if (Message.Length > 2 && Message[1] == '-') {
+							if (int.TryParse (Message.Remove (0,2), out Side) == true) {
+								Random random  = new Random ();
+								int Result = random.Next (1, Side);
+								Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second - Side) + "*";
+							}
+						}
+						else {
+
+							if (int.TryParse (Message.Remove (0,1), out Side) == true) {
+								Random random  = new Random ();
+								int Result = 0;
+								if (Side > 1) {
+									Result = random.Next (1, Side);
+								}
+								Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second + Side) + "*";
+							}
+						}
+					}
+					await e.Message.RespondAsync (Respond);
+				}
+			}
+
+			//Позволяет печатать прямо из консоли в любой канал, при отправке в azure лучше закоментить этот код
 			//while(true) {
 			//	string Message = Console.ReadLine ();
 			//	DSharpPlus.Entities.DiscordChannel channel = await discord.GetChannelAsync (292562693993529349);//NSFW Science 439527469897351178 //Bot log 530096997726945317

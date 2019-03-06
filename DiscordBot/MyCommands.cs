@@ -26,12 +26,12 @@ namespace DiscordBot {
 		}
 
 
-		[Command("Ping")]
+		[Command("ping")]
 		public async Task Ping (CommandContext context) {
 			await context.RespondAsync ("📡 Pong");
 		}
 
-		[Command ("Invite")]
+		[Command ("invite")]
 		public async Task Invite (CommandContext context) {
 			await context.RespondAsync ("https://discordapp.com/oauth2/authorize?client_id=531216002956918804&scope=bot&permissions=8");
 		}
@@ -43,7 +43,7 @@ namespace DiscordBot {
 			await context.RespondAsync (Respond);
 		}
 
-		[Command ("Choose")]
+		[Command ("choose")]
 		public async Task Choose (CommandContext context) {
 			string[] Suggestions = context.Message.Content.Split(' ');
 			Random rand = new Random ();
@@ -76,9 +76,17 @@ namespace DiscordBot {
 			await context.RespondAsync (Respond);
 		}
 
-		[Command ("Reverse")]
+		[Command ("reverse")]
 		public async Task Reverse (CommandContext context) {
 			await context.RespondAsync (Program.LastDeletedMessage);
+		}
+
+		[Command ("rolle")]
+		public async Task RolleDice (CommandContext context, int Side) {
+			Random random  = new Random ();
+			int Result = random.Next (1, Side);
+			string Respond = "🎲 " + context.Message.Author.Username + " rolled: *" + Result + "*";
+			await context.RespondAsync (Respond);
 		}
 
 		#region Статы
@@ -86,7 +94,7 @@ namespace DiscordBot {
 		[Command ("осил")]
 		public async Task Strength (CommandContext context) {
 			string Respond = "**Сила** \n";
-			Respond += RoleState (0);
+			Respond += RoleStat (0);
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
@@ -94,7 +102,7 @@ namespace DiscordBot {
 		[Command("овын")]
 		public async Task Stamina (CommandContext context) {
 			string Respond = "**Выносливость** \n";
-			Respond += RoleState (1);
+			Respond += RoleStat (1);
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
@@ -102,7 +110,7 @@ namespace DiscordBot {
 		[Command("олов")]
 		public async Task Agility (CommandContext context) {
 			string Respond = "**Ловкость** \n";
-			Respond += RoleState (2);
+			Respond += RoleStat (2);
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
@@ -110,7 +118,7 @@ namespace DiscordBot {
 		[Command("овос")]
 		public async Task Perception (CommandContext context) {
 			string Respond = "**Восприятие** \n";
-			Respond += RoleState (3);
+			Respond += RoleStat (3);
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
@@ -118,7 +126,7 @@ namespace DiscordBot {
 		[Command("оинт")]
 		public async Task Intelligence (CommandContext context) {
 			string Respond = "**Интеллект** \n";
-			Respond += RoleState (4);
+			Respond += RoleStat (4);
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
@@ -126,7 +134,7 @@ namespace DiscordBot {
 		[Command("овол")]
 		public async Task Will (CommandContext context) {
 			string Respond = "**Воля** \n";
-			Respond += RoleState (5);
+			Respond += RoleStat (5);
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
@@ -134,7 +142,7 @@ namespace DiscordBot {
 		[Command("ооба")]
 		public async Task Charm (CommandContext context) {
 			string Respond = "**Обаяние** \n";
-			Respond += RoleState (6);
+			Respond += RoleStat (6);
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
@@ -142,14 +150,15 @@ namespace DiscordBot {
 		[Command("оуда")]
 		public async Task Luck (CommandContext context) {
 			string Respond = "**Удача** \n";
-			Respond += RoleState (7);
+			Respond += RoleStat (7);
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
 
 		#endregion
 
-		public static string RoleState (int State) {
+
+		public static string RoleStat (int State) {
 
 			string Respond = "";
 
