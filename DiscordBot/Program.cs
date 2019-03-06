@@ -89,11 +89,6 @@ namespace DiscordBot {
 			async Task StatCheck (MessageCreateEventArgs e) {
 
 				string Message = e.Message.Content.ToLower();
-				IReadOnlyList<DSharpPlus.Entities.DiscordEmoji> EmojiList = e.Guild.Emojis;
-
-				for (int i = 0; i < EmojiList.Count; i++) {
-					Console.WriteLine (EmojiList[i].Id + " name "+ EmojiList[i].Name);
-				}
 				
 				if (Message[0] == 'd') {
 
@@ -120,7 +115,7 @@ namespace DiscordBot {
 							if (int.TryParse (Message.Remove (0,2), out Side) == true) {
 								Random random  = new Random ();
 								int Result = random.Next (1, Side);
-								Respond = e.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "-" + Side "= **" + (First - Second - Side) + "**";
+								Respond = e.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "-" + Side + "= **" + (First - Second - Side) + "**";
 							}
 						}
 						else {
@@ -131,7 +126,7 @@ namespace DiscordBot {
 								if (Side > 1) {
 									Result = random.Next (1, Side);
 								}
-								Respond = e.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "+" + Side "= **" + (First - Second + Side) + "**";
+								Respond = e.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "+" + Side + "= **" + (First - Second + Side) + "**";
 							}
 						}
 					}
