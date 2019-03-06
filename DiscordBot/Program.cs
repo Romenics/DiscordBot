@@ -43,12 +43,35 @@ namespace DiscordBot {
 
 			commands = discord.UseCommandsNext (commandsConfig);
 			commands.RegisterCommands <MyCommands> ();
+			MyCommands.FillList ();
 			Console.WriteLine ("Bot staterted");
 
 			
 			//Detecting new message
 			discord.MessageCreated += async e => {
-				await Task.Delay(0);
+
+				string Message = e.Message.Content.ToLower();
+
+				if (Message[0] == 'd') {
+					string Respond = "";
+
+					if (Message.Length == 1) {
+						Random FirstD6  = new Random ();
+						Random SecondD6 = new Random ();
+						int First  = FirstD6 .Next (1,7);
+						int Second = SecondD6.Next (1,7);
+						Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second) + "*";
+					}
+					else {
+						int Side = 0;
+						if (int.TryParse (Message.Remove (0,1), out Side) == true) {
+							Random random  = new Random ();
+							int Result = random.Next (1, Side);
+							Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + Result + "*";
+						}
+					}
+					await e.Message.RespondAsync (Respond);
+				}
 			};
 
 
@@ -89,11 +112,11 @@ namespace DiscordBot {
 				}
 			}
 
-			while(true) {
-				string Message = Console.ReadLine ();
-				DSharpPlus.Entities.DiscordChannel channel = await discord.GetChannelAsync (292562693993529349);//NSFW Science 439527469897351178 //Bot log 530096997726945317
-				await discord.SendMessageAsync (channel, Message);
-			}
+			//while(true) {
+			//	string Message = Console.ReadLine ();
+			//	DSharpPlus.Entities.DiscordChannel channel = await discord.GetChannelAsync (292562693993529349);//NSFW Science 439527469897351178 //Bot log 530096997726945317
+			//	await discord.SendMessageAsync (channel, Message);
+			//}
 
 			await Task.Delay(-1);
 		}
