@@ -99,9 +99,15 @@ namespace DiscordBot {
 					Random SecondD6 = new Random ();
 					int First  = FirstD6 .Next (1,7);
 					int Second = SecondD6.Next (1,7);
+					
+					string GreenDie;
+					string RedDie;
+					
+					GreenDie = ":g" + First + ":";
+					RedDie = ":r" + Second + ":";
 
 					if (Message.Length == 1) {
-						Respond = "🎲 " + e.Message.Author.Username + " rolled: :g" + First + ": and :r" + Second + ": result: *" + (First - Second) + "*";
+						Respond = "🎲 " + e.Message.Author.Username + " rolled: " + GreenDie + " " + RedDie + " result: *" + (First - Second) + "*";
 					}
 					else {
 						int Side = 0;
