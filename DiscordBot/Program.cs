@@ -43,7 +43,6 @@ namespace DiscordBot {
 
 			commands = discord.UseCommandsNext (commandsConfig);
 			commands.RegisterCommands <MyCommands> ();
-			commands.RegisterCommands <VozhbCommands> ();
 			MyCommands.FillList ();
 			Console.WriteLine ("Bot staterted");
 
@@ -90,7 +89,12 @@ namespace DiscordBot {
 			async Task StatCheck (MessageCreateEventArgs e) {
 
 				string Message = e.Message.Content.ToLower();
+				IReadOnlyList<DSharpPlus.Entities.DiscordEmoji> EmojiList = e.Guild.Emojis;
 
+				for (int i = 0; i < EmojiList.Count; i++) {
+					Console.WriteLine (EmojiList[i].Id + " name "+ EmojiList[i].Name);
+				}
+				
 				if (Message[0] == 'd') {
 
 					string Respond = "";
@@ -103,11 +107,11 @@ namespace DiscordBot {
 					string GreenDie;
 					string RedDie;
 					
-					GreenDie = ":g" + First + ":";
-					RedDie = ":r" + Second + ":";
+					GreenDie = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g" + First + ":").ToString();
+					RedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Second + ":").ToString();
 
 					if (Message.Length == 1) {
-						Respond = "🎲 " + e.Message.Author.Username + " rolled: " + GreenDie + " " + RedDie + " result: *" + (First - Second) + "*";
+						Respond = "🎲 " + e.Message.Author.Mention + " rolled " + GreenDie + " " + RedDie + " result *" + (First - Second) + "*";
 					}
 					else {
 						int Side = 0;
@@ -116,7 +120,7 @@ namespace DiscordBot {
 							if (int.TryParse (Message.Remove (0,2), out Side) == true) {
 								Random random  = new Random ();
 								int Result = random.Next (1, Side);
-								Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second - Side) + "*";
+								Respond = "🎲 " + e.Message.Author.Mention + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second - Side) + "*";
 							}
 						}
 						else {
