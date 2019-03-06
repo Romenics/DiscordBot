@@ -101,7 +101,7 @@ namespace DiscordBot {
 					int Second = SecondD6.Next (1,7);
 
 					if (Message.Length == 1) {
-						Respond = "🎲 " + e.Message.Author.Username + " rolled: *" + First + "* and *-" + Second + "* result: *" + (First - Second) + "*";
+						Respond = "🎲 " + e.Message.Author.Username + " rolled: :g" + First + ": and :r" + Second + ": result: *" + (First - Second) + "*";
 					}
 					else {
 						int Side = 0;
