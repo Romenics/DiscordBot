@@ -173,6 +173,22 @@ namespace DiscordBot {
 			return Respond;
 		}
 
+		[Command("набор")]
+		public async Task Nabor (CommandContext context) {
+			string Respond = e.Message.Author.Mention + "**раскидывает набор**\n";
+			
+			Random GreenDie = new Random ();
+			Random RedDie = new Random ();
+
+			Respond += GreenDie.Next (1,7) - RedDie.Next (1,7) + "\t" + GreenDie.Next (1,7) - RedDie.Next (1,7) + "\n";
+			Respond += GreenDie.Next (1,7) - RedDie.Next (1,7) + "\t" + GreenDie.Next (1,7) - RedDie.Next (1,7) + "\n";
+			Respond += GreenDie.Next (1,7) - RedDie.Next (1,7) + "\t" + GreenDie.Next (1,7) - RedDie.Next (1,7) + "\n";
+			Respond += GreenDie.Next (1,7) - RedDie.Next (1,7) + "\t" + GreenDie.Next (1,7) - RedDie.Next (1,7) + "\n";				
+
+			await context.RespondAsync (Respond);
+			await context.Message.DeleteAsync();
+		}
+
 
 		public static void FillList () {
 
