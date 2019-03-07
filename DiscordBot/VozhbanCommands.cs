@@ -25,7 +25,7 @@ string Str = "";
 
 namespace DiscordBot {
 	
-	public class VozbanCommands {
+	public class VozhbanCommands {
 		
 		public static void LoadText () {
 			//В теории, должно дёргать всякое из файлов
