@@ -39,7 +39,7 @@ namespace DiscordBot {
 		[Command ("Help")]
 		public async Task Help (CommandContext context) {
 			string Respond = 
-			"```Commands: \n Help \n Ping \n Invite \n d \n Choose \n ShowChannels \n ```";
+			"```Commands: \n Help \n ping \n invite \n d \n choose \n ShowChannels \n ```";
 			await context.RespondAsync (Respond);
 		}
 

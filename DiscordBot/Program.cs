@@ -60,35 +60,35 @@ namespace DiscordBot {
 			discord.MessageReactionAdded += Permission;
 			discord.MessageCreated		 += StatCheck;
 			
-			async Task TumbUp (MessageReactionAddEventArgs e) {
+			async Task TumbUp (MessageReactionAddEventArgs context) {
 
-				if (e.Emoji.Name == "👍") {
-					await e.Message.RespondAsync (e.User.Username + " like it!");
+				if (context.Emoji.Name == "👍") {
+					await context.Message.RespondAsync (context.User.Username + " like it!");
 				}
 			}
 
-			async Task Clock (MessageReactionAddEventArgs e) {
+			async Task Clock (MessageReactionAddEventArgs context) {
 
-				if (e.Emoji.Name == "⏲") {
-					string Respond = e.User.Username + " готов поиграть в ДС!";
+				if (context.Emoji.Name == "⏲") {
+					string Respond = context.User.Username + " готов поиграть в ДС!";
 					if (PartyCount > 0) {
 						Respond += "\n Кстати в войсе уже " + PartyCount + " людей!";
 					}
-					await e.Message.RespondAsync (Respond);
+					await context.Message.RespondAsync (Respond);
 				}
 			}
 			await discord.ConnectAsync();
 
-			async Task Permission (MessageReactionAddEventArgs e) {
+			async Task Permission (MessageReactionAddEventArgs context) {
 
-				if (e.Emoji.Name == "🔫") {
-					await e.Message.RespondAsync (e.Message.Author.Username + " расстрелян");
+				if (context.Emoji.Name == "🔫") {
+					await context.Message.RespondAsync (context.Message.Author.Username + " расстрелян");
 				}
 			}
 
-			async Task StatCheck (MessageCreateEventArgs e) {
+			async Task StatCheck (MessageCreateEventArgs context) {
 
-				string Message = e.Message.Content.ToLower();
+				string Message = context.Message.Content.ToLower();
 				
 				if (Message[0] == 'd') {
 
@@ -106,7 +106,7 @@ namespace DiscordBot {
 					RedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Second + ":").ToString();
 
 					if (Message.Length == 1) {
-						Respond = e.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "= **" + (First - Second) + "**";
+						Respond = context.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "= **" + (First - Second) + "**";
 					}
 					else {
 						int Side = 0;
@@ -115,7 +115,7 @@ namespace DiscordBot {
 							if (int.TryParse (Message.Remove (0,2), out Side) == true) {
 								Random random  = new Random ();
 								int Result = random.Next (1, Side);
-								Respond = e.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "-" + Side + "= **" + (First - Second - Side) + "**";
+								Respond = context.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "-" + Side + "= **" + (First - Second - Side) + "**";
 							}
 						}
 						else {
@@ -126,12 +126,12 @@ namespace DiscordBot {
 								if (Side > 1) {
 									Result = random.Next (1, Side);
 								}
-								Respond = e.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "+" + Side + "= **" + (First - Second + Side) + "**";
+								Respond = context.Message.Author.Mention + " выкидывает " + GreenDie + RedDie + " | " + First + "-" + Second + "+" + Side + "= **" + (First - Second + Side) + "**";
 							}
 						}
 					}
-					await e.Message.RespondAsync (Respond);
-					await e.Message.DeleteAsync ();
+					await context.Message.RespondAsync (Respond);
+					await context.Message.DeleteAsync ();
 				}
 			}
 
