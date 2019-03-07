@@ -45,6 +45,7 @@ namespace DiscordBot {
 			commands.RegisterCommands <MyCommands> ();
 			commands.RegisterCommands <VozbanCommands> ();
 			MyCommands.FillList ();
+			VozhbanCommands.LoadText ();
 			Console.WriteLine ("Bot staterted");
 
 
