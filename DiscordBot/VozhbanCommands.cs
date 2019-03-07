@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using System.Collections //ArrayList вроде как отсюда
+using System.Collections; //ArrayList вроде как отсюда
 using System.IO; //Реально не знаю нужно ли
 
 static ArrayList Size = new ArrayList ();
@@ -25,47 +25,47 @@ string Str = "";
 
 namespace DiscordBot {
 	
-	public static void LoadText () {
+	public class VozbanCommands {
 		
-		StreamReader SRSize = new StreamReader ("DiscordBot/Txts/Size.txt"); //В теории, должно дёргать всякое из файлов
-		while ((Str = SRSize.ReadLine ()) != null) {
-			Size.Add ( Str );
-			SizeCount++;
-		}
-		
-		StreamReader SRAdj = new StreamReader ("DiscordBot/Txts/Adj.txt");
-		while ((Str = SRAdj.ReadLine ()) != null) {
-			Adj.Add ( Str );
-			AdjCount++;
-		}
-		
-		StreamReader SRAdjPl = new StreamReader ("DiscordBot/Txts/Adj.txt");
-		while ((Str = SRAdjPl.ReadLine ()) != null) {
-			AdjPl.Add ( Str );
-			AdjPlCount++;
-		}
-		
-		StreamReader SRBase = new StreamReader ("DiscordBot/Txts/Base.txt");
-		while ((Str = SRBase.ReadLine ()) != null) {
-			Base.Add ( Str );
-			BaseCount++;
-		}
-		
-		StreamReader SRBaseRP = new StreamReader ("DiscordBot/Txts/BaseRP.txt");
-		while ((Str = SRBaseRP.ReadLine ()) != null) {
-			BaseRP.Add ( Str );
-			BaseRPCount++;
-		}
-		
-		StreamReader SRLimbs = new StreamReader ("DiscordBot/Txts/Limbs.txt");
-		while ((Str = SRLimbs.ReadLine ()) != null) {
-			Limbs.Add ( Str );
-			LimbsCount++;
-		}
+		public static void LoadText () {
+			//В теории, должно дёргать всякое из файлов
+			StreamReader SRSize = new StreamReader ("DiscordBot/Txts/Size.txt");
+			while ((Str = SRSize.ReadLine ()) != null) {
+				Size.Add ( Str );
+				SizeCount++;
+			}
+			
+			StreamReader SRAdj = new StreamReader ("DiscordBot/Txts/Adj.txt");
+			while ((Str = SRAdj.ReadLine ()) != null) {
+				Adj.Add ( Str );
+				AdjCount++;
+			}
+			
+			StreamReader SRAdjPl = new StreamReader ("DiscordBot/Txts/Adj.txt");
+			while ((Str = SRAdjPl.ReadLine ()) != null) {
+				AdjPl.Add ( Str );
+				AdjPlCount++;
+			}
+			
+			StreamReader SRBase = new StreamReader ("DiscordBot/Txts/Base.txt");
+			while ((Str = SRBase.ReadLine ()) != null) {
+				Base.Add ( Str );
+				BaseCount++;
+			}
+			
+			StreamReader SRBaseRP = new StreamReader ("DiscordBot/Txts/BaseRP.txt");
+			while ((Str = SRBaseRP.ReadLine ()) != null) {
+				BaseRP.Add ( Str );
+				BaseRPCount++;
+			}
+			
+			StreamReader SRLimbs = new StreamReader ("DiscordBot/Txts/Limbs.txt");
+			while ((Str = SRLimbs.ReadLine ()) != null) {
+				Limbs.Add ( Str );
+				LimbsCount++;
+			}
 	
-	}
-	
-	public class VozhbanCommands {
+		}
 
 		[Command("форготня")]
 		public async Task ForgottenBeast (CommandContext context) {
