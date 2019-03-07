@@ -176,41 +176,54 @@ namespace DiscordBot {
 		
 		[Command("хард")]
 		public async Task HardNabor (CommandContext context) {
-			string Respond = e.Message.Author.Mention + "** раскидывает хардкорный набор**\n";
+			string Respond = context.Message.Author.Mention + "** раскидывает хардкорный набор**\n";
 			
 			Random GreenDie = new Random ();
 			Random RedDie = new Random ();
 			
 			int[] Stat = new int[8];
-			int i;
+
+			for (int i = 0; i < 8; i ++) {
+				Stat[i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
+			}
 			
-			for (i = 0; i < 8; i ++) stat[i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
-			
-			for (i = 0; i < 4; i ++) {
-				if (Stat[i] > 0) Respond += "+";
-				else if (Stat[i] == 0) Respond += " ";
+			for (int i = 0; i < 4; i ++) {
+
+				if (Stat[i] > 0) {
+					Respond += "+";
+				}
+				else if (Stat[i] == 0) {
+					Respond += " "; 
+				}
+
 				Respond += Stat[i] + "\t";
-				if (Stat[i + 4] > 0) Respond += "+";
-				else if (Stat[i + 4] == 0) Respond += " ";
+
+				if (Stat[i + 4] > 0) {
+					Respond += "+";
+				} else if (Stat[i + 4] == 0) {
+					Respond += " "; 
+				}
 				Respond += Stat[i + 4] + "\n";
 			}
+
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
 		}
 		
 		[Command("набор")]
 		public async Task Nabor (CommandContext context) {
-			string Respond = e.Message.Author.Mention + "** раскидывает набор**\n";
+			string Respond = context.Message.Author.Mention + "** раскидывает набор**\n";
 			
 			Random GreenDie = new Random ();
 			Random RedDie = new Random ();
 			
 			int[] Stat = new int[8];
-			int i,j;
 			
-			for (i = 0; i < 8; i ++) stat[i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
-			
-			for (i = 0; i < 7; i ++) {
+			for (int i = 0; i < 8; i ++) {
+				Stat[i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
+			}
+			int j = 0;
+			for (int i = 0; i < 7; i ++) {
 				for (j = 7; j > i; j --) {
 					if(Stat[j] > Stat[j - 1]) {
 						Stat[j - 1] += Stat[j];
@@ -221,7 +234,7 @@ namespace DiscordBot {
 			}
 			
 			j = 0;
-			for (i = 0; i < 8; i ++) {
+			for (int i = 0; i < 8; i ++) {
 				if ((i > 0) && (Stat[i] != Stat[i-1])) Respond += "\n";
 				if (Stat[i] > 0) Respond += "+";
 				Respond += Stat[i];
@@ -236,21 +249,24 @@ namespace DiscordBot {
 		
 		[Command("изи")]
 		public async Task HeroNabor (CommandContext context) {
-			string Respond = e.Message.Author.Mention + "** раскидывает три набора**\n";
+			string Respond = context.Message.Author.Mention + "** раскидывает три набора**\n";
 			
 			Random GreenDie = new Random ();
 			Random RedDie = new Random ();
 			
-			int[][] Stat = new int[3][8];
-			int i,j,k;
-			
-			for (k = 0; k < 3; k ++) {
-				for (i = 0; i < 8; i ++) stat[k][i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
+			int[][] Stat = new int[3][];
+
+			for (int i = 0; i <3; i++) {
+				Stat[i] = new int[8];
 			}
 			
-			for (k = 0; k < 3; k ++) {
-				for (i = 0; i < 7; i ++) {
-					for (j = 7; j > i; j --) {
+			for (int k = 0; k < 3; k ++) {
+				for (int i = 0; i < 8; i ++) Stat[k][i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
+			}
+			
+			for (int k = 0; k < 3; k ++) {
+				for (int i = 0; i < 7; i ++) {
+					for (int j = 7; j > i; j --) {
 						if(Stat[k][j] > Stat[k][j - 1]) {
 							Stat[k][j - 1] += Stat[k][j];
 							Stat[k][j] = Stat[k][j - 1] - Stat[k][j];
@@ -260,9 +276,9 @@ namespace DiscordBot {
 				}
 			}
 			
-			for (k = 0; k < 3; k ++) {
-				j = 0;
-				for (i = 0; i < 8; i ++) {
+			for (int k = 0; k < 3; k ++) {
+				int j = 0;
+				for (int i = 0; i < 8; i ++) {
 					if ((i > 0) && (Stat[k][i] != Stat[k][i-1])) Respond += "\n";
 					if (Stat[k][i] > 0) Respond += "+";
 					Respond += Stat[k][i];
