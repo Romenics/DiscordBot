@@ -65,7 +65,7 @@ namespace DiscordBot {
 	
 	}
 	
-	public class VozbanCommands {
+	public class VozhbanCommands {
 
 		[Command("форготня")]
 		public async Task ForgottenBeast (CommandContext context) {
