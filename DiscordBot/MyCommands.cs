@@ -237,7 +237,7 @@ namespace DiscordBot {
 			for (int i = 0; i < 8; i ++) {
 				if ((i > 0) && (Stat[i] != Stat[i-1])) Respond += "\n";
 				if (Stat[i] > 0) Respond += "+";
-				Respond += Stat[i];
+				Respond += Stat[i] + " ";
 				j += Stat[i];
 			}
 			
@@ -281,7 +281,7 @@ namespace DiscordBot {
 				for (int i = 0; i < 8; i ++) {
 					if ((i > 0) && (Stat[k][i] != Stat[k][i-1])) Respond += "\n";
 					if (Stat[k][i] > 0) Respond += "+";
-					Respond += Stat[k][i];
+					Respond += Stat[k][i] + " ";
 					j += Stat[k][i];
 				}
 				Respond += "\n**Сумма: " + j + "**\n\n";
