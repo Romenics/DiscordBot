@@ -43,7 +43,7 @@ namespace DiscordBot {
 
 			commands = discord.UseCommandsNext (commandsConfig);
 			commands.RegisterCommands <MyCommands> ();
-			commands.RegisterCommands <VozbanCommands> ();
+			commands.RegisterCommands <VozhbanCommands> ();
 			MyCommands.FillList ();
 			VozhbanCommands.LoadText ();
 			Console.WriteLine ("Bot staterted");
