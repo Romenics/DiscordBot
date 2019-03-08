@@ -18,6 +18,12 @@ namespace DiscordBot {
 		static List<string> Base   = new List<string> ();
 		static List<string> BaseRP = new List<string> ();
 		static List<string> Limbs  = new List<string> ();
+		static List<string> Limb  = new List<string> ();
+		static List<string> Spot  = new List<string> ();
+		static List<string> Mat  = new List<string> ();
+		static List<string> Aura  = new List<string> ();
+		static List<string> Danger  = new List<string> ();
+		static List<string> Liquid  = new List<string> ();
 
 		static int SizeCount = 0;
 		static int AdjCount = 0;
@@ -25,6 +31,12 @@ namespace DiscordBot {
 		static int BaseCount = 0;
 		static int BaseRPCount = 0;
 		static int LimbsCount = 0;
+		static int LimbCount = 0;
+		static int SpotCount = 0;
+		static int MatCount = 0;
+		static int AuraCount = 0;
+		static int DangerCount = 0;
+		static int LiquidCount = 0;
 
 		static string Str = "";
 
@@ -65,6 +77,42 @@ namespace DiscordBot {
 				Limbs.Add ( Str );
 				LimbsCount++;
 			}
+			
+			StreamReader SRLimb = new StreamReader ("Txts/Limb.txt");
+			while ((Str = SRLimb.ReadLine ()) != null) {
+				Limb.Add ( Str );
+				LimbCount++;
+			}
+			
+			StreamReader SRSpot = new StreamReader ("Txts/Spot.txt");
+			while ((Str = SRSpot.ReadLine ()) != null) {
+				Spot.Add ( Str );
+				SpotCount++;
+			}
+			
+			StreamReader SRMat = new StreamReader ("Txts/Mat.txt");
+			while ((Str = SRMat.ReadLine ()) != null) {
+				Mat.Add ( Str );
+				MatCount++;
+			}
+			
+			StreamReader SRAura = new StreamReader ("Txts/Aura.txt");
+			while ((Str = SRAura.ReadLine ()) != null) {
+				Aura.Add ( Str );
+				AuraCount++;
+			}
+			
+			StreamReader SRDanger = new StreamReader ("Txts/Danger.txt");
+			while ((Str = SRDanger.ReadLine ()) != null) {
+				Danger.Add ( Str );
+				DangerCount++;
+			}
+			
+			StreamReader SRLiquid = new StreamReader ("Txts/Liquid.txt");
+			while ((Str = SRLiquid.ReadLine ()) != null) {
+				Liquid.Add ( Str );
+				LiquidCount++;
+			}
 	
 		}
 
@@ -72,19 +120,8 @@ namespace DiscordBot {
 		public async Task ForgottenBeast (CommandContext context) {
 			
 			Random Chance = new Random ();
-			
-			int debug = 0; //Нужно мне, чтобы выводить всякое в дискорд.
 
 			string Respond = "";
-
-			if (debug == 1) {
-				Respond += "```\nSize.txt has " + SizeCount + " lines\n";
-				Respond += "Adj.txt has " + AdjCount + " lines\n";
-				Respond += "AdjPl.txt has " + AdjPlCount + " lines\n";
-				Respond += "Base.txt has " + BaseCount + " lines\n";
-				Respond += "BaseRP.txt has " + BaseRPCount + " lines\n";
-				Respond += "Limbs.txt has " + LimbsCount + " lines\n```\n\n";
-			}
 			
 			//Тестовая версия теоритически содержит всё до индивидуальных конечностей
 
@@ -94,8 +131,6 @@ namespace DiscordBot {
 			*Размер* *50% Прилаг* *25% Прилаг* *Внешность*
 			с *50% Прилаг* *25% Прилаг* головой похожей на *Внешность РП*
 			75% тело которого покрывают *50% ПрилагМн* *25% ПрилагМн* *Конечности* 50% и *50% ПрилагМн* *25% ПрилагМн* *Конечности*
-			=== Конечности от 0 до 100 шт ===
-			*Положение* растёт *50% Прилаг* *25% Прилаг* *Конечность* как *25% Внешность РП* из *тип материала* которую покрывают *50% Конечности*.
 			*/
 			
 			Respond += "Забытое чудовище *Имя* выглядит как " + Size[Chance.Next (0, SizeCount)] + " ";	//Забытое чудовище *Имя* выглядит как *Размер*
@@ -125,15 +160,165 @@ namespace DiscordBot {
 				if (Chance.Next (0, 100) < 50) {
 					Respond += " и ";	//50% и 
 					if (Chance.Next (0, 100) < 50) {
-						Respond += AdjPl[Chance.Next (0, AdjCount)] + " ";	//*50% ПрилагМн*
+						Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";	//*50% ПрилагМн*
 					}
 					if (Chance.Next (0, 100) < 25) {
-						Respond += AdjPl[Chance.Next (0, AdjCount)] + " ";	//*25% ПрилагМн*
+						Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";	//*25% ПрилагМн*
 					}
 					Respond += Limbs[Chance.Next (0, LimbsCount)];	//*Конечности*
 				}
 			}
-			Respond += ".";	//. Дальше должны пойти индивидуальные конечности. Потом. Когда заработает эта часть.
+			Respond += ".\n";	//.
+			/*
+			=== Конечности от 0 до 100 шт ===
+			*Положение* растёт *50% Прилаг* *25% Прилаг* *Конечность* как *25% Внешность РП* из *тип материала* которую покрывают *50% Конечности*.
+			*/
+			
+			for (int i = 0; i < 4; i ++) {
+				if (Chance.Next (0, 100) < 50) {
+					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					if (Chance.Next (0, 100) < 25) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					if (Chance.Next (0, 100) < 25) {
+						Respond += "как у " + BaseRP[Chance.Next (0, BaseRPCount)] + " ";
+					}
+					Respond += "из " Mat[Chance.Next (0, MatCount)] + " ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += "которую покрывают "
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						Respond += Limbs[Chance.Next (0, LimbsCount)] + ".\n";
+					}
+				}
+			}
+			
+			for (i; i < 10; i ++) {
+				if (Chance.Next (0, 100) < 20) {
+					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					if (Chance.Next (0, 100) < 25) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					if (Chance.Next (0, 100) < 25) {
+						Respond += "как у " + BaseRP[Chance.Next (0, BaseRPCount)] + " ";
+					}
+					Respond += "из " Mat[Chance.Next (0, MatCount)] + " ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += "которую покрывают "
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						Respond += Limbs[Chance.Next (0, LimbsCount)] + ".\n";
+					}
+				}
+			}
+			
+			for (i; i < 20; i ++) {
+				if (Chance.Next (0, 100) < 10) {
+					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					if (Chance.Next (0, 100) < 25) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					if (Chance.Next (0, 100) < 25) {
+						Respond += "как у " + BaseRP[Chance.Next (0, BaseRPCount)] + " ";
+					}
+					Respond += "из " Mat[Chance.Next (0, MatCount)] + " ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += "которую покрывают "
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						Respond += Limbs[Chance.Next (0, LimbsCount)] + ".\n";
+					}
+				}
+			}
+			
+			for (i; i < 35; i ++) {
+				if (Chance.Next (0, 100) < 5) {
+					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					if (Chance.Next (0, 100) < 25) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					if (Chance.Next (0, 100) < 25) {
+						Respond += "как у " + BaseRP[Chance.Next (0, BaseRPCount)] + " ";
+					}
+					Respond += "из " Mat[Chance.Next (0, MatCount)] + " ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += "которую покрывают "
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						Respond += Limbs[Chance.Next (0, LimbsCount)] + ".\n";
+					}
+				}
+			}
+			
+			for (i; i < 100; i ++) {
+				if (Chance.Next (0, 100) < 1) {
+					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					if (Chance.Next (0, 100) < 25) {
+						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
+					}
+					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					if (Chance.Next (0, 100) < 25) {
+						Respond += "как у " + BaseRP[Chance.Next (0, BaseRPCount)] + " ";
+					}
+					Respond += "из " + Mat[Chance.Next (0, MatCount)] + " ";
+					if (Chance.Next (0, 100) < 50) {
+						Respond += "которую покрывают "
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						if (Chance.Next (0, 100) < 50) {
+							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
+						}
+						Respond += Limbs[Chance.Next (0, LimbsCount)] + ".\n";
+					}
+				}
+			}
+
+			Respond += "Его плоть из " + Mat[Chance.Next (0, MatCount)] + ".\n";
+			Respond += "Его внутренности из " + Mat[Chance.Next (0, MatCount)] + ".\n";
+			Respond += "Его важные органы из " + Mat[Chance.Next (0, MatCount)] + ".\n";
+			Respond += "В его жилах течёт " + Liquid[Chance.Next (0, LiquidCount)] + ".\n";
+			Respond += "Его окружает аура " + Aura[Chance.Next (0, AuraCount)];
+			if (Chance.Next (0, 100) < 50) {
+				Respond += " и " + Aura[Chance.Next (0, AuraCount)];
+			}
+			Respond += ".\nОстерегайтесь его " + Danger[Chance.Next (0, DangerCount)] + ".";
+			
 			
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
