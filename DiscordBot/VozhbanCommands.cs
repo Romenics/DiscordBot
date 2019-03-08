@@ -134,7 +134,7 @@ namespace DiscordBot {
 			75% тело которого покрывают *50% ПрилагМн* *25% ПрилагМн* *Конечности* 50% и *50% ПрилагМн* *25% ПрилагМн* *Конечности*
 			*/
 			
-			Respond += "Забытое чудовище *Имя* выглядит как " + Size[Chance.Next (0, SizeCount)] + " ";	//Забытое чудовище *Имя* выглядит как *Размер*
+			Respond += "Забытое чудовище выглядит как " + Size[Chance.Next (0, SizeCount)] + " ";	//Забытое чудовище *Имя* выглядит как *Размер*
 			if (Chance.Next (0, 100) < 50) {
 				Respond += Adj[Chance.Next (0, AdjCount)] + " ";	//*50% Прилаг*
 			}
@@ -148,7 +148,7 @@ namespace DiscordBot {
 			if (Chance.Next (0, 100) < 25) {
 				Respond += Adj[Chance.Next (0, AdjCount)] + " ";	//*25% Прилаг*
 			}
-			Respond += "головой похожей на " + BaseSC[Chance.Next (0, BaseSCCount)];	//головой похожей на *Внешность РП*
+			Respond += "головой как у " + BaseSC[Chance.Next (0, BaseSCCount)];	//головой похожей на *Внешность РП*
 			if (Chance.Next (0, 100) < 75) {
 				Respond += " тело которого покрывают ";	//75% тело которого покрывают
 				if (Chance.Next (0, 100) < 50) {
@@ -187,12 +187,12 @@ namespace DiscordBot {
 						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
 					}
 					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					Respond += "из " + Mat[Chance.Next (0, MatCount)];
 					if (Chance.Next (0, 100) < 25) {
-						Respond += "как у " + BaseSC[Chance.Next (0, BaseSCCount)] + " ";
+						Respond += " как у " + BaseSC[Chance.Next (0, BaseSCCount)];
 					}
-					Respond += "из " + Mat[Chance.Next (0, MatCount)] + " ";
 					if (Chance.Next (0, 100) < 50) {
-						Respond += "которую покрывают ";
+						Respond += ", конечность покрывают ";
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
@@ -215,12 +215,12 @@ namespace DiscordBot {
 						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
 					}
 					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					Respond += "из " + Mat[Chance.Next (0, MatCount)];
 					if (Chance.Next (0, 100) < 25) {
-						Respond += "как у " + BaseSC[Chance.Next (0, BaseSCCount)] + " ";
+						Respond += " как у " + BaseSC[Chance.Next (0, BaseSCCount)];
 					}
-					Respond += "из " + Mat[Chance.Next (0, MatCount)] + " ";
 					if (Chance.Next (0, 100) < 50) {
-						Respond += "которую покрывают ";
+						Respond += ", конечность покрывают ";
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
@@ -243,12 +243,12 @@ namespace DiscordBot {
 						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
 					}
 					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					Respond += "из " + Mat[Chance.Next (0, MatCount)];
 					if (Chance.Next (0, 100) < 25) {
-						Respond += "как у " + BaseSC[Chance.Next (0, BaseSCCount)] + " ";
+						Respond += " как у " + BaseSC[Chance.Next (0, BaseSCCount)];
 					}
-					Respond += "из " + Mat[Chance.Next (0, MatCount)] + " ";
 					if (Chance.Next (0, 100) < 50) {
-						Respond += "которую покрывают ";
+						Respond += ", конечность покрывают ";
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
@@ -271,12 +271,12 @@ namespace DiscordBot {
 						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
 					}
 					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					Respond += "из " + Mat[Chance.Next (0, MatCount)];
 					if (Chance.Next (0, 100) < 25) {
-						Respond += "как у " + BaseSC[Chance.Next (0, BaseSCCount)] + " ";
+						Respond += " как у " + BaseSC[Chance.Next (0, BaseSCCount)];
 					}
-					Respond += "из " + Mat[Chance.Next (0, MatCount)] + " ";
 					if (Chance.Next (0, 100) < 50) {
-						Respond += "которую покрывают ";
+						Respond += ", конечность покрывают ";
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
@@ -299,12 +299,12 @@ namespace DiscordBot {
 						Respond += Adj[Chance.Next (0, AdjCount)] + " ";
 					}
 					Respond += Limb[Chance.Next (0, LimbCount)] + " ";
+					Respond += "из " + Mat[Chance.Next (0, MatCount)];
 					if (Chance.Next (0, 100) < 25) {
-						Respond += "как у " + BaseSC[Chance.Next (0, BaseSCCount)] + " ";
+						Respond += " как у " + BaseSC[Chance.Next (0, BaseSCCount)];
 					}
-					Respond += "из " + Mat[Chance.Next (0, MatCount)] + " ";
 					if (Chance.Next (0, 100) < 50) {
-						Respond += "которую покрывают ";
+						Respond += ", конечность покрывают ";
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
