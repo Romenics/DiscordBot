@@ -175,7 +175,9 @@ namespace DiscordBot {
 			*Положение* растёт *50% Прилаг* *25% Прилаг* *Конечность* как *25% Внешность РП* из *тип материала* которую покрывают *50% Конечности*.
 			*/
 			
-			for (int i = 0; i < 4; i ++) {
+			int i = 0;
+
+			for (; i < 4; i ++) {
 				if (Chance.Next (0, 100) < 50) {
 					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
 					if (Chance.Next (0, 100) < 50) {
@@ -202,7 +204,7 @@ namespace DiscordBot {
 				}
 			}
 			
-			for (int i = 0; i < 10; i ++) {
+			for (; i < 10; i ++) {
 				if (Chance.Next (0, 100) < 20) {
 					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
 					if (Chance.Next (0, 100) < 50) {
@@ -229,7 +231,7 @@ namespace DiscordBot {
 				}
 			}
 			
-			for (int i = 0; i < 20; i ++) {
+			for (; i < 20; i ++) {
 				if (Chance.Next (0, 100) < 10) {
 					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
 					if (Chance.Next (0, 100) < 50) {
@@ -256,7 +258,7 @@ namespace DiscordBot {
 				}
 			}
 			
-			for (int i = 0; i < 35; i ++) {
+			for (; i < 35; i ++) {
 				if (Chance.Next (0, 100) < 5) {
 					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
 					if (Chance.Next (0, 100) < 50) {
@@ -283,7 +285,7 @@ namespace DiscordBot {
 				}
 			}
 			
-			for (int i = 0; i < 100; i ++) {
+			for (; i < 100; i ++) {
 				if (Chance.Next (0, 100) < 1) {
 					Respond += Spot[Chance.Next (0, SpotCount)] + " растёт ";
 					if (Chance.Next (0, 100) < 50) {
