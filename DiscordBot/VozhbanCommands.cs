@@ -199,8 +199,9 @@ namespace DiscordBot {
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
-						Respond += LimbPl[Chance.Next (0, LimbPlCount)] + ".\n";
+						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
+					Respond += ".\n"
 				}
 			}
 			
@@ -226,8 +227,9 @@ namespace DiscordBot {
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
-						Respond += LimbPl[Chance.Next (0, LimbPlCount)] + ".\n";
+						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
+					Respond += ".\n"
 				}
 			}
 			
@@ -253,8 +255,9 @@ namespace DiscordBot {
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
-						Respond += LimbPl[Chance.Next (0, LimbPlCount)] + ".\n";
+						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
+					Respond += ".\n"
 				}
 			}
 			
@@ -280,8 +283,9 @@ namespace DiscordBot {
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
-						Respond += LimbPl[Chance.Next (0, LimbPlCount)] + ".\n";
+						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
+					Respond += ".\n"
 				}
 			}
 			
@@ -307,8 +311,9 @@ namespace DiscordBot {
 						if (Chance.Next (0, 100) < 50) {
 							Respond += AdjPl[Chance.Next (0, AdjPlCount)] + " ";
 						}
-						Respond += LimbPl[Chance.Next (0, LimbPlCount)] + ".\n";
+						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
+					Respond += ".\n"
 				}
 			}
 
