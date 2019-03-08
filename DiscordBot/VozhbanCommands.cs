@@ -86,6 +86,7 @@ namespace DiscordBot {
 			
 			StreamReader SRSpot = new StreamReader ("Txts/Spot.txt");
 			while ((Str = SRSpot.ReadLine ()) != null) {
+				Str = Str[0].ToUpper() + Str.Substring(1);
 				Spot.Add ( Str );
 				SpotCount++;
 			}
