@@ -7,26 +7,28 @@ using DSharpPlus.CommandsNext.Attributes;
 using System.Collections; //ArrayList вроде как отсюда
 using System.IO; //Реально не знаю нужно ли
 
-static ArrayList Size = new ArrayList ();
-static ArrayList Adj = new ArrayList ();
-static ArrayList AdjPl = new ArrayList ();
-static ArrayList Base = new ArrayList ();
-static ArrayList BaseRP = new ArrayList ();
-static ArrayList Limbs = new ArrayList ();
 
-static Int SizeCount = 0;
-static Int AdjCount = 0;
-static Int AdjPlCount = 0;
-static Int BaseCount = 0;
-static Int BaseRPCount = 0;
-static Int LimbsCount = 0;
-
-string Str = "";
 
 namespace DiscordBot {
 	
 	public class VozhbanCommands {
 		
+		static List<string> Size = new List<string> ();
+		static List<string> Adj = new List<string> ();
+		static List<string> AdjPl = new List<string> ();
+		static List<string> Base = new List<string> ();
+		static List<string> BaseRP = new List<string> ();
+		static List<string> Limbs = new List<string> ();
+
+		static int SizeCount = 0;
+		static int AdjCount = 0;
+		static int AdjPlCount = 0;
+		static int BaseCount = 0;
+		static int BaseRPCount = 0;
+		static int LimbsCount = 0;
+
+		string Str = "";
+
 		public static void LoadText () {
 			//В теории, должно дёргать всякое из файлов
 			StreamReader SRSize = new StreamReader ("DiscordBot/Txts/Size.txt");
