@@ -201,7 +201,7 @@ namespace DiscordBot {
 						}
 						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
-					Respond += ".\n"
+					Respond += ".\n";
 				}
 			}
 			
@@ -229,7 +229,7 @@ namespace DiscordBot {
 						}
 						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
-					Respond += ".\n"
+					Respond += ".\n";
 				}
 			}
 			
@@ -257,7 +257,7 @@ namespace DiscordBot {
 						}
 						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
-					Respond += ".\n"
+					Respond += ".\n";
 				}
 			}
 			
@@ -285,7 +285,7 @@ namespace DiscordBot {
 						}
 						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
-					Respond += ".\n"
+					Respond += ".\n";
 				}
 			}
 			
@@ -313,7 +313,7 @@ namespace DiscordBot {
 						}
 						Respond += LimbPl[Chance.Next (0, LimbPlCount)];
 					}
-					Respond += ".\n"
+					Respond += ".\n";
 				}
 			}
 
