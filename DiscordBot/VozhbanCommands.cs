@@ -42,7 +42,7 @@ namespace DiscordBot {
 				AdjCount++;
 			}
 			
-			StreamReader SRAdjPl = new StreamReader ("Txts/Adj.txt");
+			StreamReader SRAdjPl = new StreamReader ("Txts/AdjPl.txt");
 			while ((Str = SRAdjPl.ReadLine ()) != null) {
 				AdjPl.Add ( Str );
 				AdjPlCount++;
