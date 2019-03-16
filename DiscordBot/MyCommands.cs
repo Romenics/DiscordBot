@@ -4,12 +4,15 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using System.IO;
 
 
 namespace DiscordBot {
 	public class MyCommands {
 
 		public static List <Character> Characters = new List<Character>();
+
+		public static List <string> Sacraments = new List<string> ();
 
 		public class Character {
 
@@ -26,7 +29,7 @@ namespace DiscordBot {
 		}
 
 
-		[Command("ping")]
+		[Command ("ping")]
 		public async Task Ping (CommandContext context) {
 			await context.RespondAsync ("📡 Pong");
 		}
@@ -82,12 +85,39 @@ namespace DiscordBot {
 		}
 
 		[Command ("rolle")]
-		public async Task RolleDice (CommandContext context, int Side) {
+		public async Task RoleDice (CommandContext context, int Side) {
 			Random random  = new Random ();
 			int Result = random.Next (1, Side);
 			string Respond = "🎲 " + context.Message.Author.Username + " rolled: *" + Result + "*";
 			await context.RespondAsync (Respond);
 		}
+
+		[Command ("обеты")]
+		public async Task RoleSacrament (CommandContext context, int Count) {
+
+			string Respond = "```";
+			List <int> Choosen = new List<int>();
+
+			for (int i = 0; i < Count; i++) {
+				Random random  = new Random ();
+				int Number = random.Next (0, Sacraments.Count);
+
+				//Проверяем, чтобы не было одинаковых обетов
+				if (Choosen.Contains (Number) == false) {
+					Choosen.Add (Number);
+					Respond += (Number + 1) + " " + Sacraments[Number] + "\n";
+				}
+				else {
+					i--;
+				}
+			} 
+
+			Respond += "```";
+	
+			await context.RespondAsync (Respond);
+			await context.Message.DeleteAsync();
+		}
+
 
 		#region Статы
 
@@ -352,6 +382,15 @@ namespace DiscordBot {
 			NewCharacter.Stats[6] = 1;
 			NewCharacter.Stats[7] =-2;
 			Characters.Add (NewCharacter);
+
+
+			//Загрузка обетов
+			Sacraments.Clear ();
+			StreamReader SRSacrament = new StreamReader ("Txts/Sacrament.txt");
+			string EachLine = "";
+			while ((EachLine = SRSacrament.ReadLine ()) != null) {
+				Sacraments.Add (EachLine);
+			}
 		}
 	}
 }
