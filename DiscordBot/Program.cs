@@ -98,6 +98,56 @@ namespace DiscordBot {
 				}
 			}
 			
+			
+			async Task RollXDice (MessageCreateEventArgs context) {
+
+				string Message = context.Message.Content.ToLower();
+				
+				int d = Message.IndexOf("r");
+				
+				if (d != -1) {
+				
+					string Respond = "";
+					int RollCount = 0;
+					
+					if (d == 0) {
+						RollCount = 1;
+					}
+					else {
+						if (int.TryParse (Message.Remove (d), out RollCount) == true) {
+							if (RollCount <= 0) {
+								RollCount = 0;
+								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
+							}
+						}
+					}
+						
+					for (int i = 0; i < RollCount; i++) {
+						Random Die = new Random ();
+						int Dice = RedDie.Next (1,7);
+						
+						if (Message.Length == d+1) {
+							Respond += context.Message.Author.Mention + " выкидывает **" + Dice + "**\n";
+						}
+						else {
+							int Mod = 0;
+							string Sign = "";
+							if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
+								if (Mod >= 0) {
+									Sign = "+";
+								}
+								else {
+									Sign = "";
+								}
+								Respond += context.Message.Author.Mention + " выкидывает " + Dice + Sign + Mod + " = **" + (Dice + Mod) + "**\n";
+							}
+						}
+					}
+					await context.Message.RespondAsync (Respond);
+					await context.Message.DeleteAsync ();
+				}
+			}
+			
 			async Task RollDice (MessageCreateEventArgs context) {
 
 				string Message = context.Message.Content.ToLower();
