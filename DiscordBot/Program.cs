@@ -134,7 +134,7 @@ namespace DiscordBot {
 						EmoGreenDie = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g" + Green + ":").ToString();
 						EmoRedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Red + ":").ToString();
 							
-						if (Message.Length == d+1) {
+						if (Message.Length == 1) {
 							Respond = context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red) + "**";
 						}
 						else {
