@@ -116,7 +116,7 @@ namespace DiscordBot {
 						if (int.TryParse (Message.Remove (d), out RollCount) == true) {
 							if (RollCount <= 0) {
 								RollCount = 0;
-								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.";
+								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
 							}
 						}
 					}
@@ -135,19 +135,19 @@ namespace DiscordBot {
 						EmoRedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Red + ":").ToString();
 							
 						if (Message.Length == d+1) {
-							Respond = context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red) + "**";
+							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red) + "**\n";
 						}
 						else {
 							int Mod = 0;
 							string Sign = "";
-							if (int.TryParse (Message.Remove (0,d), out Mod) == true) {
+							if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
 								if (Mod >= 0) {
 									Sign = "+";
 								}
 								else {
 									Sign = "";
 								}
-								Respond = context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod) + "**";
+								Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod) + "**\n";
 							}
 						}
 					}
