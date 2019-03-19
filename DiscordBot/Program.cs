@@ -60,7 +60,7 @@ namespace DiscordBot {
 			discord.MessageReactionAdded += TumbUp;
 			discord.MessageReactionAdded += Clock;
 			discord.MessageReactionAdded += Permission;
-			discord.MessageCreated		 += StatCheck;
+			discord.MessageCreated		 += RollDice;
 			
 			async Task TumbUp (MessageReactionAddEventArgs context) {
 
@@ -93,8 +93,8 @@ namespace DiscordBot {
 				string Message = context.Message.Content.ToLower();
 				
 				if (Message.Contains("@ДС")) {
-					context.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g6:"));
-					context.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r1:"));
+					await context.Message.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g6:"));
+					await context.Message.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r1:"));
 				}
 			}
 			
@@ -112,10 +112,12 @@ namespace DiscordBot {
 					if (d == 0) {
 						RollCount = 1;
 					}
-					else (int.TryParse (Message.Remove (d), out RollCount) == true) {
-						if (RollCount <= 0) {
-							RollCount = 0;
-							Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.";
+					else {
+						if (int.TryParse (Message.Remove (d), out RollCount) == true) {
+							if (RollCount <= 0) {
+								RollCount = 0;
+								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.";
+							}
 						}
 					}
 						
@@ -137,12 +139,13 @@ namespace DiscordBot {
 						}
 						else {
 							int Mod = 0;
+							string Sign = "";
 							if (int.TryParse (Message.Remove (0,d), out Mod) == true) {
 								if (Mod >= 0) {
-									string Sign = "+";
+									Sign = "+";
 								}
 								else {
-									string Sign = "";
+									Sign = "";
 								}
 								Respond = context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod) + "**";
 							}
