@@ -92,7 +92,7 @@ namespace DiscordBot {
 				
 				string Message = context.Message.Content.ToLower();
 				
-				if (Message.Contains("@ДС")) {
+				if (Message.Contains("<@&515543976678391808>")) {
 					await context.Message.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g6:"));
 					await context.Message.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r1:"));
 				}
