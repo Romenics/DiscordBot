@@ -98,6 +98,60 @@ namespace DiscordBot {
 				}
 			}
 			
+			async Task RollDice (MessageCreateEventArgs context) {
+
+				string Message = context.Message.Content.ToLower();
+				
+				int d = Message.IndexOf("d");
+				
+				if (d != -1) {
+				
+					string Respond = "";
+					int RollCount = 0;
+					
+					if (d == 0) {
+						RollCount = 1;
+					}
+					else (int.TryParse (Message.Remove (d), out RollCount) == true) {
+						if (RollCount <= 0) {
+							RollCount = 0;
+							Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.";
+						}
+					}
+						
+					for (int i = 0; i < RollCount; i++) {
+						Random GreenDie = new Random ();
+						Random RedDie = new Random ();
+							
+						int Green  = GreenDie.Next (1,7);
+						int Red = RedDie.Next (1,7);
+							
+						string EmoGreenDie;
+						string EmoRedDie;
+							
+						EmoGreenDie = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g" + Green + ":").ToString();
+						EmoRedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Red + ":").ToString();
+							
+						if (Message.Length == d+1) {
+							Respond = context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red) + "**";
+						}
+						else {
+							int Mod = 0;
+							if (int.TryParse (Message.Remove (0,d), out Mod) == true) {
+								if (Mod >= 0) {
+									string Sign = "+";
+								}
+								else {
+									string Sign = "";
+								}
+								Respond = context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod) + "**";
+							}
+						}
+					}
+				}
+			}
+			
+			/*
 			async Task StatCheck (MessageCreateEventArgs context) {
 
 				string Message = context.Message.Content.ToLower();
@@ -146,6 +200,7 @@ namespace DiscordBot {
 					await context.Message.DeleteAsync ();
 				}
 			}
+			*/
 
 			//Позволяет печатать прямо из консоли в любой канал, при отправке в azure лучше закоментить этот код
 			//while(true) {
