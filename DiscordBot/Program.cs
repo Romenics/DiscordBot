@@ -139,7 +139,7 @@ namespace DiscordBot {
 	 					int Dice = Die.Next (1,Sides+1);
 	 				}
 				
-				 if (d == 0) {
+					if (d == 0) {
 						RollCount = 1;
 					}
 					else {
@@ -149,6 +149,11 @@ namespace DiscordBot {
 								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
 							}
 						}
+					}
+					
+					if ((RollCount <= 0) || (Message.Length == d+1) || (Message.Length == s+1) || (s == d+1) || (Sides <= 0))  {
+						RollCount = 0;
+						Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
 					}
 					
 					for (int i = 0; i < RollCount; i++) {
