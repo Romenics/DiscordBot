@@ -115,7 +115,7 @@ namespace DiscordBot {
 					}
 					else {
 						if (int.TryParse (Message.Remove (d), out RollCount) == true) {
-							if (RollCount <= 0) {
+							if ((RollCount <= 0) || (Message.Length == d+1))  {
 								RollCount = 0;
 								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
 							}
@@ -124,23 +124,12 @@ namespace DiscordBot {
 						
 					for (int i = 0; i < RollCount; i++) {
 						Random Die = new Random ();
-						int Dice = RedDie.Next (1,7);
-						
-						if (Message.Length == d+1) {
-							Respond += context.Message.Author.Mention + " выкидывает **" + Dice + "**\n";
-						}
-						else {
-							int Mod = 0;
-							string Sign = "";
-							if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
-								if (Mod >= 0) {
-									Sign = "+";
-								}
-								else {
-									Sign = "";
-								}
-								Respond += context.Message.Author.Mention + " выкидывает " + Dice + Sign + Mod + " = **" + (Dice + Mod) + "**\n";
-							}
+						int Sides = 0;
+						string Sign = "";
+							
+						if (int.TryParse (Message.Remove (0,d+1), out Sides) == true) {
+							int Dice = Die.Next (1,Sides+1);
+							Respond += context.Message.Author.Mention + " выкидывает = **" + Dice + "**\n";
 						}
 					}
 					await context.Message.RespondAsync (Respond);
