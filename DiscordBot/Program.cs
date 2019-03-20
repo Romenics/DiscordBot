@@ -90,7 +90,7 @@ namespace DiscordBot {
 
 			async Task TolpojDS (MessageCreateEventArgs context) {
 				
-				string Message = context.Message.Content.ToLower();
+				string Message = context.Message.Content.ToUpper();
 				
 				if (Message.Contains("<@&515543976678391808>")) {
 					await context.Message.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g6:"));
