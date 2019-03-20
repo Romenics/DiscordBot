@@ -61,6 +61,8 @@ namespace DiscordBot {
 			discord.MessageReactionAdded += Clock;
 			discord.MessageReactionAdded += Permission;
 			discord.MessageCreated		 += RollDice;
+			discord.MessageCreated		 += RollXDice;
+			discord.MessageCreated		 += TolpojDS;
 			
 			async Task TumbUp (MessageReactionAddEventArgs context) {
 
