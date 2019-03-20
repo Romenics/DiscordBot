@@ -159,11 +159,11 @@ namespace DiscordBot {
 					for (int i = 0; i < RollCount; i++) {
 						if (Mod == 0) {
 							int Dice = Die.Next (1,Sides+1);
-							Respond += context.Message.Author.Mention + " выкидывает **" + Dice + "**\n";
+							Respond += context.Message.Author.Mention + " кидает " + Sides + "-гранник и выкидывает **" + Dice + "**\n";
 						}
 						else {
 							int Dice = Die.Next (1,Sides+1);
-							Respond += context.Message.Author.Mention + " выкидывает " + Dice + Sign + Mod + " = **" + (Dice+Mod) + "**\n";
+							Respond += context.Message.Author.Mention + " кидает " + Sides + "-гранник и выкидывает " + Dice + Sign + Mod + " = **" + (Dice+Mod) + "**\n";
 						}
 					}
 					await context.Message.RespondAsync (Respond);
