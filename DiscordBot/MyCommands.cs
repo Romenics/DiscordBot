@@ -370,7 +370,7 @@ namespace DiscordBot {
 		}
 		
 		[Command("наборзз")]
-		public async Task Nabor (CommandContext context) {
+		public async Task NaborZZ (CommandContext context) {
 			string Respond = context.Message.Author.Mention + "** раскидывает набор**\n";
 			
 			Random GreenDie = new Random ();
@@ -407,7 +407,7 @@ namespace DiscordBot {
 		}
 		
 		[Command("изизз")]
-		public async Task HeroNabor (CommandContext context) {
+		public async Task HeroNaborZZ (CommandContext context) {
 			string Respond = context.Message.Author.Mention + "** раскидывает три набора**\n";
 			
 			Random GreenDie = new Random ();
