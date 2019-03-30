@@ -320,6 +320,134 @@ namespace DiscordBot {
 			await context.Message.DeleteAsync();
 		}
 
+		[Command("хардзз")]
+		public async Task HardNaborZZ (CommandContext context) {
+			string Respond = context.Message.Author.Mention + "** раскидывает хардкорный набор**\n";
+			
+			Random GreenDie = new Random ();
+			Random RedDie = new Random ();
+			
+			int[] Stat = new int[13];
+
+			for (int i = 0; i < 13; i ++) {
+				Stat[i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
+			}
+			
+			for (int i = 0; i < 4; i ++) {
+
+				if (Stat[i] > 0) {
+					Respond += "+";
+				}
+				else if (Stat[i] == 0) {
+					Respond += " "; 
+				}
+
+				Respond += Stat[i] + "\t";
+
+				if (Stat[i + 4] > 0) {
+					Respond += "+";
+				}
+				else if (Stat[i + 4] == 0) {
+					Respond += " "; 
+				}
+				
+				Respond += Stat[i + 4] + "\t";
+				
+				if (Stat[i + 8] > 0) {
+					Respond += "+";
+				}
+				else if (Stat[i + 8] == 0) {
+					Respond += " "; 
+				}
+				
+				Respond += Stat[i + 8] + "\n";
+			}
+			
+			Respond += "\t\t" + Stat[12];
+
+			await context.RespondAsync (Respond);
+			await context.Message.DeleteAsync();
+		}
+		
+		[Command("наборзз")]
+		public async Task Nabor (CommandContext context) {
+			string Respond = context.Message.Author.Mention + "** раскидывает набор**\n";
+			
+			Random GreenDie = new Random ();
+			Random RedDie = new Random ();
+			
+			int[] Stat = new int[13];
+			
+			for (int i = 0; i < 13; i ++) {
+				Stat[i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
+			}
+			int j = 0;
+			for (int i = 0; i < 12; i ++) {
+				for (j = 12; j > i; j --) {
+					if(Stat[j] > Stat[j - 1]) {
+						Stat[j - 1] += Stat[j];
+						Stat[j] = Stat[j - 1] - Stat[j];
+						Stat[j - 1] -= Stat[j];
+					}
+				}
+			}
+			
+			j = 0;
+			for (int i = 0; i < 13; i ++) {
+				if ((i > 0) && (Stat[i] != Stat[i-1])) Respond += "\n";
+				if (Stat[i] > 0) Respond += "+";
+				Respond += Stat[i] + " ";
+				j += Stat[i];
+			}
+			
+			Respond += "\n**Сумма: " + j + "**";
+			
+			await context.RespondAsync (Respond);
+			await context.Message.DeleteAsync();
+		}
+		
+		[Command("изизз")]
+		public async Task HeroNabor (CommandContext context) {
+			string Respond = context.Message.Author.Mention + "** раскидывает три набора**\n";
+			
+			Random GreenDie = new Random ();
+			Random RedDie = new Random ();
+			
+			int[][] Stat = new int[3][];
+
+			for (int i = 0; i <3; i++) {
+				Stat[i] = new int[13];
+			}
+			
+			for (int k = 0; k < 3; k ++) {
+				for (int i = 0; i < 13; i ++) Stat[k][i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
+			}
+			
+			for (int k = 0; k < 3; k ++) {
+				for (int i = 0; i < 12; i ++) {
+					for (int j = 12; j > i; j --) {
+						if(Stat[k][j] > Stat[k][j - 1]) {
+							Stat[k][j - 1] += Stat[k][j];
+							Stat[k][j] = Stat[k][j - 1] - Stat[k][j];
+							Stat[k][j - 1] -= Stat[k][j];
+						}
+					}
+				}
+			}
+			
+			for (int k = 0; k < 3; k ++) {
+				int j = 0;
+				for (int i = 0; i < 13; i ++) {
+					if ((i > 0) && (Stat[k][i] != Stat[k][i-1])) Respond += "\n";
+					if (Stat[k][i] > 0) Respond += "+";
+					Respond += Stat[k][i] + " ";
+					j += Stat[k][i];
+				}
+				Respond += "\n**Сумма: " + j + "**\n\n";
+			}
+			await context.RespondAsync (Respond);
+			await context.Message.DeleteAsync();
+		}
 
 		public static void FillList () {
 
