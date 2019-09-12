@@ -44,8 +44,9 @@ namespace DiscordBot {
 					DiscordMessage mess = await  Program.discord.SendMessageAsync(channel, message);
 					await mess.DeleteAsync();
 				}
-
 			}
+
+			await context.Message.DeleteAsync();
 
 		}
 
