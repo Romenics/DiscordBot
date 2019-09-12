@@ -5,6 +5,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System.IO;
+using DSharpPlus.Entities;
 
 
 namespace DiscordBot {
@@ -31,7 +32,21 @@ namespace DiscordBot {
 
 		[Command ("ping")]
 		public async Task Ping (CommandContext context) {
-			await context.RespondAsync ("📡 Pong");
+
+			string message = context.Message.Content;
+
+			IReadOnlyList<DSharpPlus.Entities.DiscordChannel> AllChannels = context.Guild.Channels;
+			for (int i = 0; i < AllChannels.Count; i++) {
+
+				DSharpPlus.Entities.DiscordChannel channel = await Program.discord.GetChannelAsync(AllChannels[i].Id);
+
+				if (channel.Type == ChannelType.Text){
+					DiscordMessage mess = await  Program.discord.SendMessageAsync(channel, message);
+					await mess.DeleteAsync();
+				}
+
+			}
+
 		}
 
 		[Command ("invite")]
