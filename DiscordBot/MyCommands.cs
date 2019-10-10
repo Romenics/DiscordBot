@@ -108,6 +108,70 @@ namespace DiscordBot {
 			await context.RespondAsync (Respond);
 		}
 
+		[Command ("check")]
+		public async Task CheckRandom (CommandContext context, int count) {
+
+			
+
+			int m5 = 0;
+			int m4 = 0;
+			int m3 = 0;
+			int m2 = 0;
+			int m1 = 0;
+			int zero = 0;
+			int p1 = 0;
+			int p2 = 0;
+			int p3 = 0;
+			int p4 = 0;
+			int p5 = 0;
+
+
+			for (int i = 0; i < count; i++) {
+
+				Random GreenDie = new Random ();
+				Random RedDie = new Random ();
+				
+				int Green  = GreenDie.Next (1,7);
+				int Red = RedDie.Next (1,7);
+
+				if ((Green - Red) == -5) {
+					m5++;
+				}
+				if ((Green - Red) == -4) {
+					m4++;
+				}
+				if ((Green - Red) == -3) {
+					m3++;
+				}
+				if ((Green - Red) == -2) {
+					m2++;
+				}
+				if ((Green - Red) == -1) {
+					m1++;
+				}
+				if ((Green - Red) == 0) {
+					zero++;
+				}
+				if ((Green - Red) == 1) {
+					p1++;
+				}
+				if ((Green - Red) == 2) {
+					p2++;
+				}
+				if ((Green - Red) == 3) {
+					p3++;
+				}
+				if ((Green - Red) == 4) {
+					p4++;
+				}
+				if ((Green - Red) == 5) {
+					p5++;
+				}
+
+			}
+			await context.RespondAsync ("-5 выпало: " + m5 + "\n -4 выпало: " + m4 + "\n -3 выпало: " + m3 + "\n -2 выпало: " + m2 + "\n -1 выпало: " + m1 + "\n 0 выпало: " + zero + "\n +1 выпало: " + p1 + "\n +2 выпало: " + p2 + "\n +3 выпало: " + p3 + "\n +4 выпало: " + p4 + "\n +5 выпало: " + p5);
+		}
+
 		[Command ("обеты")]
 		public async Task RoleSacrament (CommandContext context, int Count) {
 
