@@ -232,9 +232,16 @@ namespace DiscordBot {
 								else {
 									Sign = "";
 								}
-								Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod) + "**\n";
+								Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod) + "**";
 							}
 						}
+						if ((Green - Red) == 5) {
+							Respond += "** Критический Успех.**";
+						}
+						else if ((Green - Red) == -5) {
+							Respond += "** Критический Провал.**";
+						}
+						Respond += "\n";
 					}
 					await context.Message.RespondAsync (Respond);
 					await context.Message.DeleteAsync ();
