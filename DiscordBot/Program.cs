@@ -220,7 +220,7 @@ namespace DiscordBot {
 						EmoRedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Red + ":").ToString();
 							
 						if (Message.Length == d+1) {
-							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red) + "**";
+							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
 						}
 						else {
 							int Mod = 0;
