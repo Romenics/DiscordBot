@@ -220,7 +220,7 @@ namespace DiscordBot {
 						EmoRedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Red + ":").ToString();
 							
 						if (Message.Length == d+1) {
-							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red) + "**\n";
+							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red) + "**";
 						}
 						else {
 							int Mod = 0;
@@ -232,16 +232,16 @@ namespace DiscordBot {
 								else {
 									Sign = "";
 								}
-								Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod) + "**";
+								Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod);
 							}
 						}
 						if ((Green - Red) == 5) {
-							Respond += "** Критический Успех.**";
+							Respond += ". Критический Успех";
 						}
 						else if ((Green - Red) == -5) {
-							Respond += "** Критический Провал.**";
+							Respond += ". Критический Провал";
 						}
-						Respond += "\n";
+						Respond += "**\n";
 					}
 					await context.Message.RespondAsync (Respond);
 					await context.Message.DeleteAsync ();
