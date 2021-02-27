@@ -234,6 +234,10 @@ namespace DiscordBot {
 								}
 								Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod);
 							}
+							else {
+								// Защита от удаления сообщения, если это не запрос боту, а слово на d
+								return;
+							}
 						}
 						if ((Green - Red) == 5) {
 							Respond += ". Критический Успех";
