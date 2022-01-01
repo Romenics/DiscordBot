@@ -63,19 +63,19 @@ namespace DiscordBot {
 			};
 
 			//Working when readction added
-			discord.MessageReactionAdded += TumbUp;
+			//discord.MessageReactionAdded += TumbUp;
 			discord.MessageReactionAdded += Clock;
 			discord.MessageReactionAdded += Permission;
 			discord.MessageCreated		 += RollDice;
 			discord.MessageCreated		 += RollXDice;
 			discord.MessageCreated		 += TolpojDS;
 			
-			async Task TumbUp (MessageReactionAddEventArgs context) {
-
-				if (context.Emoji.Name == "👍") {
-					await context.Message.RespondAsync (context.User.Username + " like it!");
-				}
-			}
+			//async Task TumbUp (MessageReactionAddEventArgs context) {
+			//
+			//	if (context.Emoji.Name == "👍") {
+			//		await context.Message.RespondAsync (context.User.Username + " like it!");
+			//	}
+			//}
 
 			async Task Clock (MessageReactionAddEventArgs context) {
 
@@ -205,7 +205,7 @@ namespace DiscordBot {
 							}
 						}
 					}
-						
+					Console.Write ("Message" + context.Message.Content + " RollCount: " + RollCount);
 					for (int i = 0; i < RollCount; i++) {
 						Random GreenDie = new Random ();
 						Random RedDie = new Random ();
@@ -216,8 +216,8 @@ namespace DiscordBot {
 						string EmoGreenDie;
 						string EmoRedDie;
 							
-						EmoGreenDie = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g" + Green + ":").ToString();
-						EmoRedDie   = DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Red + ":").ToString();
+						EmoGreenDie = ":green_square:"; //DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g" + Green + ":").ToString();
+						EmoRedDie   = ":red_square:";//DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Red + ":").ToString();
 							
 						if (Message.Length == d+1) {
 							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
