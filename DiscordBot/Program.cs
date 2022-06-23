@@ -236,9 +236,6 @@ namespace DiscordBot {
 						if (Mod >= 0) {
 							Sign = "+";
 						}
-						else {
-							Sign = "";
-						}
 					}
 					else {
 						// Защита от удаления сообщения, если это не запрос боту, а слово на d
@@ -253,6 +250,11 @@ namespace DiscordBot {
 						string EmoRedDie;
 						EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
 						EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
+						
+						if (Message.Length == d+1) {
+							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
+							return;
+						}
 						
 						if(Mod == 0) {
 							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
@@ -280,10 +282,10 @@ namespace DiscordBot {
 							int Red = RedDie.Next (1,7);
 							Sum += Green - Red + Mod;
 							if ((Green - Red) == 5) {
-								Respond += "__" + (Green-Red+Mod) + "__";
+								Respond += "{*__" + (Green-Red+Mod) + "__*}";
 							}
 							else if ((Green - Red) == -5) {
-								Respond += "~~" + (Green-Red+Mod) + "~~";
+								Respond += "(*~~" + (Green-Red+Mod) + "~~*)";
 							}
 							else {
 								Respond += (Green-Red+Mod);
