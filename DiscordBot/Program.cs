@@ -203,7 +203,7 @@ namespace DiscordBot {
 				}
 			}
 			
-async Task RollDice (DiscordClient discordClient, MessageCreateEventArgs context) {
+			async Task RollDice (DiscordClient discordClient, MessageCreateEventArgs context) {
 
 				string Message = context.Message.Content.ToLower();
 				
