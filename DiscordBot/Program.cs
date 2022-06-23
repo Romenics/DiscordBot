@@ -248,7 +248,7 @@ namespace DiscordBot {
 						EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
 						EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
 						
-						if(Green - Red > 0) {
+						if(Green - Red + Mod> 0) {
 							SignD = "+";
 						}
 						
@@ -282,7 +282,7 @@ namespace DiscordBot {
 							int Green  = GreenDie.Next (1,7);
 							int Red = RedDie.Next (1,7);
 							string SignD = "";
-							if(Green - Red > 0) {
+							if(Green - Red + Mod > 0) {
 								SignD = "+";
 							}
 							Sum += Green - Red + Mod;
