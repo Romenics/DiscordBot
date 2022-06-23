@@ -6,10 +6,11 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System.IO;
 using DSharpPlus.Entities;
+using DSharpPlus.SlashCommands;
 
 
 namespace DiscordBot {
-	public class MyCommands {
+	public class MyCommands : BaseCommandModule {
 
 		public static List <Character> Characters = new List<Character>();
 
@@ -35,14 +36,13 @@ namespace DiscordBot {
 
 			string message = context.Message.Content;
 
-			IReadOnlyList<DSharpPlus.Entities.DiscordChannel> AllChannels = context.Guild.Channels;
-			for (int i = 0; i < AllChannels.Count; i++) {
+			IReadOnlyDictionary<ulong, DiscordChannel> AllChannels = context.Guild.Channels;
+			foreach (KeyValuePair <ulong, DiscordChannel> each in AllChannels) {
+				DiscordChannel channel = await Program.discord.GetChannelAsync(each.Value.Id);
 
-				DSharpPlus.Entities.DiscordChannel channel = await Program.discord.GetChannelAsync(AllChannels[i].Id);
-
-				if (channel.Type == ChannelType.Text){
+				if (channel.Type == ChannelType.Text) {
 					DiscordMessage mess = await  Program.discord.SendMessageAsync(channel, message);
-					await mess.DeleteAsync();
+					await mess.DeleteAsync ();
 				}
 			}
 
@@ -53,13 +53,6 @@ namespace DiscordBot {
 		[Command ("invite")]
 		public async Task Invite (CommandContext context) {
 			await context.RespondAsync ("https://discordapp.com/oauth2/authorize?client_id=531216002956918804&scope=bot&permissions=8");
-		}
-
-		[Command ("Help")]
-		public async Task Help (CommandContext context) {
-			string Respond = 
-			"```Commands: \n Help \n ping \n invite \n d \n choose \n ShowChannels \n ```";
-			await context.RespondAsync (Respond);
 		}
 
 		[Command ("choose")]
@@ -76,9 +69,10 @@ namespace DiscordBot {
 			string Respond = "Server name: " + context.Guild.Name + "\n";
 			Respond += context.Guild.Owner.Mention + "is owner \n";
 
-			IReadOnlyList<DSharpPlus.Entities.DiscordChannel> AllChannels = context.Guild.Channels;
-			for (int i = 0; i < AllChannels.Count; i++) {
-				Respond += AllChannels[i].Name +" is " + AllChannels[i].Topic + "\n";
+			IReadOnlyDictionary<ulong ,DSharpPlus.Entities.DiscordChannel> AllChannels = context.Guild.Channels;
+
+			foreach (KeyValuePair<ulong, DiscordChannel> each in AllChannels) {
+				Respond += each.Value.Name + " is " + each.Value.Topic + "\n";
 			}
 			await context.RespondAsync (Respond);
 		}
@@ -87,17 +81,12 @@ namespace DiscordBot {
 		public async Task ShowServers (CommandContext context) {
 			string Respond = "";
 
-			IReadOnlyDictionary <ulong, DSharpPlus.Entities.DiscordGuild> allGuilds = Program.discord.Guilds;
+			IReadOnlyDictionary <ulong, DiscordGuild> allGuilds = Program.discord.Guilds;
 
-			foreach (DSharpPlus.Entities.DiscordGuild each in allGuilds.Values) {
+			foreach (DiscordGuild each in allGuilds.Values) {
 				Respond += each.Name + " owner " + each.Owner.Nickname + " with " + each.MemberCount + " people \n";
 			}
 			await context.RespondAsync (Respond);
-		}
-
-		[Command ("reverse")]
-		public async Task Reverse (CommandContext context) {
-			await context.RespondAsync (Program.LastDeletedMessage);
 		}
 
 		[Command ("rolle")]
@@ -292,29 +281,33 @@ namespace DiscordBot {
 			Random RedDie = new Random ();
 			
 			int[] Stat = new int[8];
+			int Sum = 0;
 
 			for (int i = 0; i < 8; i ++) {
 				Stat[i] = GreenDie.Next (1,7) - RedDie.Next (1,7);
+				Sum += Stat[i];
 			}
-			
-			for (int i = 0; i < 4; i ++) {
+
+			for (int i = 0; i < 4; i++) {
 
 				if (Stat[i] > 0) {
 					Respond += "+";
 				}
 				else if (Stat[i] == 0) {
-					Respond += " "; 
+					Respond += " ";
 				}
 
 				Respond += Stat[i] + "\t";
 
 				if (Stat[i + 4] > 0) {
 					Respond += "+";
-				} else if (Stat[i + 4] == 0) {
-					Respond += " "; 
+				}
+				else if (Stat[i + 4] == 0) {
+					Respond += " ";
 				}
 				Respond += Stat[i + 4] + "\n";
 			}
+			Respond += "**Сумма: " + Sum + "**";
 
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();

@@ -10,7 +10,7 @@ using System.IO; //Реально не знаю нужно ли
 
 namespace DiscordBot {
 	
-	public class VozhbanCommands {
+	public class VozhbanCommands : BaseCommandModule {
 		
 		static List<string> Size   = new List<string> ();
 		static List<string> Adj    = new List<string> ();

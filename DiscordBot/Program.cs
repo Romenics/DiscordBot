@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
+using DSharpPlus.SlashCommands;
 
 namespace DiscordBot {
 
@@ -13,10 +17,9 @@ namespace DiscordBot {
 		
 		public static DiscordClient discord;
 
-		static CommandsNextModule commands;
+		static CommandsNextExtension commands;
 
 		public static int PartyCount;
-		public static string LastDeletedMessage;
 		//Загружается из файла Token.txt
 		public static string DiscordToken;
 
@@ -25,7 +28,7 @@ namespace DiscordBot {
 
 			DiscordToken = ReadTxt ("Token.txt");
 			Console.WriteLine ("You Token: " + DiscordToken);
-			MainAsync(args).ConfigureAwait(false).GetAwaiter().GetResult();
+			MainAsync(args).ConfigureAwait (false).GetAwaiter ().GetResult();
 		}
 
 		static async Task MainAsync (string[] args) {
@@ -34,50 +37,48 @@ namespace DiscordBot {
 			DiscordConfiguration DiscordConfig = new DiscordConfiguration {
 				Token = DiscordToken,
 				TokenType = TokenType.Bot,
-				UseInternalLogHandler = true, 
-				LogLevel = LogLevel.Debug
-				
+				MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug,
+				Intents = DiscordIntents.AllUnprivileged
 			};
 			
 			discord = new DiscordClient (DiscordConfig);
 
+			string[] Prefixes = new string[1];
+			Prefixes[0] = "!!";
+
 			//Настройка списка комманд
 			CommandsNextConfiguration commandsConfig = new CommandsNextConfiguration {
-				StringPrefix = "!!",
+			
+				StringPrefixes = Prefixes,
 				EnableMentionPrefix = true
 			};
 
+			InteractivityConfiguration interactivityConfig = new InteractivityConfiguration {
+				PollBehaviour = DSharpPlus.Interactivity.Enums.PollBehaviour.KeepEmojis,
+				Timeout = TimeSpan.FromSeconds(30)
+			};
+
+			SlashCommandsExtension slashCommands = discord.UseSlashCommands();
+			//slashCommands.RegisterCommands<MyCommands>();
+
+
 			commands = discord.UseCommandsNext (commandsConfig);
-			commands.RegisterCommands <MyCommands> ();
+			commands.RegisterCommands<MyCommands> ();
 			commands.RegisterCommands <VozhbanCommands> ();
 			MyCommands.FillList ();
 			VozhbanCommands.LoadText ();
-			Console.WriteLine ("Bot staterted 2.0");
+			Console.WriteLine ("Bot staterted 3.0");
 
-
-
-			//Restore deleting message
-			discord.MessageDeleted += async e => {
-				LastDeletedMessage = e.Message.Content;
-				await Task.Delay(0);
-			};
 
 			//Working when readction added
-			//discord.MessageReactionAdded += TumbUp;
 			discord.MessageReactionAdded += Clock;
 			discord.MessageReactionAdded += Permission;
 			discord.MessageCreated		 += RollDice;
 			discord.MessageCreated		 += RollXDice;
 			discord.MessageCreated		 += TolpojDS;
-			
-			//async Task TumbUp (MessageReactionAddEventArgs context) {
-			//
-			//	if (context.Emoji.Name == "👍") {
-			//		await context.Message.RespondAsync (context.User.Username + " like it!");
-			//	}
-			//}
 
-			async Task Clock (MessageReactionAddEventArgs context) {
+
+			async Task Clock (DiscordClient discordClient, MessageReactionAddEventArgs context) {
 
 				if (context.Emoji.Name == "⏲") {
 					string Respond = context.User.Username + " готов поиграть в ДС!";
@@ -89,25 +90,25 @@ namespace DiscordBot {
 			}
 			await discord.ConnectAsync();
 
-			async Task Permission (MessageReactionAddEventArgs context) {
+			async Task Permission (DiscordClient discordClient, MessageReactionAddEventArgs context) {
 
 				if (context.Emoji.Name == "🔫") {
 					await context.Message.RespondAsync (context.Message.Author.Username + " расстрелян");
 				}
 			}
 
-			async Task TolpojDS (MessageCreateEventArgs context) {
+			async Task TolpojDS (DiscordClient discordClient, MessageCreateEventArgs context) {
 				
-				string Message = context.Message.Content.ToUpper();
-				
-				if (Message.Contains("<@&515543976678391808>")) {
-					await context.Message.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g6:"));
-					await context.Message.CreateReactionAsync(DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r1:"));
+				string message = context.Message.Content;
+
+				if (message.Contains("<@&515543976678391808>")) { //("<@&515543976678391808>")) {
+					await context.Message.CreateReactionAsync(DiscordEmoji.FromName (discordClient, ":r1:", true));
+					await context.Message.CreateReactionAsync(DiscordEmoji.FromName (discordClient, ":g6:", true));
 				}
 			}
 			
 			
-			async Task RollXDice (MessageCreateEventArgs context) {
+			async Task RollXDice (DiscordClient discordClient, MessageCreateEventArgs context) {
 
 				string Message = context.Message.Content.ToLower();
 				
@@ -183,7 +184,7 @@ namespace DiscordBot {
 				}
 			}
 			
-			async Task RollDice (MessageCreateEventArgs context) {
+			async Task RollDice (DiscordClient discordClient, MessageCreateEventArgs context) {
 
 				string Message = context.Message.Content.ToLower();
 				
@@ -216,8 +217,8 @@ namespace DiscordBot {
 						string EmoGreenDie;
 						string EmoRedDie;
 							
-						EmoGreenDie = ":green_square:"; //DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":g" + Green + ":").ToString();
-						EmoRedDie   = ":red_square:";//DSharpPlus.Entities.DiscordEmoji.FromName(discord, ":r" + Red + ":").ToString();
+						EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
+						EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
 							
 						if (Message.Length == d+1) {
 							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
