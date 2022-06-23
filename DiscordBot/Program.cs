@@ -246,21 +246,26 @@ namespace DiscordBot {
 						
 						int Green  = GreenDie.Next (1,7);
 						int Red = RedDie.Next (1,7);
+						string SignD = "";
 						string EmoGreenDie;
 						string EmoRedDie;
 						EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
 						EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
 						
+						if(Green - Red > 0) {
+							SignD = "+";
+						}
+						
 						if (Message.Length == d+1) {
-							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
+							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + SignD + (Green - Red);
 							return;
 						}
 						
 						if(Mod == 0) {
-							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
+							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + SignD + (Green - Red);
 						}
 						else {
-							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod);
+							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + SignD + (Green - Red + Mod);
 						}
 						if ((Green - Red) == 5) {
 							Respond += ". Критический Успех";
@@ -280,15 +285,19 @@ namespace DiscordBot {
 						for (int i = 0; i < RollCount; i++) {
 							int Green  = GreenDie.Next (1,7);
 							int Red = RedDie.Next (1,7);
+							string SignD = "";
+							if(Green - Red > 0) {
+								SignD = "+";
+							}
 							Sum += Green - Red + Mod;
 							if ((Green - Red) == 5) {
-								Respond += "{*__" + (Green-Red+Mod) + "__*}";
+								Respond += "{*__" + SignD + (Green-Red+Mod) + "__*}";
 							}
 							else if ((Green - Red) == -5) {
-								Respond += "(*~~" + (Green-Red+Mod) + "~~*)";
+								Respond += "(*__" + SignD + (Green-Red+Mod) + "__*)";
 							}
 							else {
-								Respond += (Green-Red+Mod);
+								Respond += SignD + (Green-Red+Mod);
 							}
 							if (i == RollCount - 1) {
 								Respond += "**.";
