@@ -121,6 +121,7 @@ namespace DiscordBot {
 					int s = Message.IndexOf("+");
 					int Mod = 0;
 					int Sides = 0;
+					int Sum = 0;
 					string Sign = "";
 					string Side = "";
 					Random Die = new Random ();
@@ -169,22 +170,40 @@ namespace DiscordBot {
 						RollCount = 0;
 					}
 					
-					for (int i = 0; i < RollCount; i++) {
-						if (Mod == 0) {
-							int Dice = Die.Next (1,Sides+1);
+					if (RollCount == 1) {
+						if(Mod == 0) {
 							Respond += context.Message.Author.Mention + " кидает " + Sides + "-гранник и выкидывает **" + Dice + "**\n";
 						}
 						else {
-							int Dice = Die.Next (1,Sides+1);
 							Respond += context.Message.Author.Mention + " кидает " + Sides + "-гранник и выкидывает " + Dice + Sign + Mod + " = **" + (Dice+Mod) + "**\n";
 						}
+					}
+					else if (RollCount > 1) {
+						if(Mod == 0) {
+							Respond += context.Message.Author.Mention + " кидает " + Sides + "-гранник " + RollCount + " раз и выкидывает **";
+						}
+						else {
+						Respond += context.Message.Author.Mention + " кидает " + Sides + "-гранник [" + Sign + Mod + "] " + RollCount + " раз и выкидывает **";
+						}
+						for (int i = 0; i < RollCount; i++) {
+							int Dice = Die.Next (1,Sides+1);
+							Sum += Dice + Mod;
+							Respond += (Dice+Mod);
+							if (i == RollCount - 1) {
+								Respond += "**.";
+							}
+							else {
+								Respond += ", ";
+							}
+						}
+						Respond += "\nСумма: **" + Sum + "**";
 					}
 					await context.Message.RespondAsync (Respond);
 					await context.Message.DeleteAsync ();
 				}
 			}
 			
-			async Task RollDice (DiscordClient discordClient, MessageCreateEventArgs context) {
+async Task RollDice (DiscordClient discordClient, MessageCreateEventArgs context) {
 
 				string Message = context.Message.Content.ToLower();
 				
@@ -194,6 +213,9 @@ namespace DiscordBot {
 				
 					string Respond = "";
 					int RollCount = 0;
+					int Mod = 0;
+					int Sum = 0;
+					string Sign = "";
 					
 					if (d == 0) {
 						RollCount = 1;
@@ -207,7 +229,21 @@ namespace DiscordBot {
 						}
 					}
 					Console.Write ("Message" + context.Message.Content + " RollCount: " + RollCount);
-					for (int i = 0; i < RollCount; i++) {
+					
+					if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
+						if (Mod >= 0) {
+							Sign = "+";
+						}
+						else {
+							Sign = "";
+						}
+					}
+					else {
+						// Защита от удаления сообщения, если это не запрос боту, а слово на d
+						return;
+					}
+					
+					if (RollCount >= 1) {
 						Random GreenDie = new Random ();
 						Random RedDie = new Random ();
 							
@@ -219,26 +255,14 @@ namespace DiscordBot {
 							
 						EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
 						EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
-							
-						if (Message.Length == d+1) {
+					}
+					
+					if (RollCount == 1) {
+						if(Mod == 0) {
 							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
 						}
 						else {
-							int Mod = 0;
-							string Sign = "";
-							if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
-								if (Mod >= 0) {
-									Sign = "+";
-								}
-								else {
-									Sign = "";
-								}
-								Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod);
-							}
-							else {
-								// Защита от удаления сообщения, если это не запрос боту, а слово на d
-								return;
-							}
+							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + (Green - Red + Mod);
 						}
 						if ((Green - Red) == 5) {
 							Respond += ". Критический Успех";
@@ -246,8 +270,38 @@ namespace DiscordBot {
 						else if ((Green - Red) == -5) {
 							Respond += ". Критический Провал";
 						}
-						Respond += "**\n";
+						Respond += "**";
 					}
+					else if (RollCount > 1) {
+						if(Mod == 0) {
+							Respond += context.Message.Author.Mention + " кидает кубы " + RollCount + " раз и выкидывает **";
+						}
+						else {
+						Respond += context.Message.Author.Mention + " кидает кубы [" + Sign + Mod + "] " + RollCount + " раз и выкидывает **";
+						}
+						for (int i = 0; i < RollCount; i++) {
+							Green  = GreenDie.Next (1,7);
+							Red = RedDie.Next (1,7);
+							Sum += Green - Red + Mod;
+							if ((Green - Red) == 5) {
+								Respond += "__" + (Green-Red+Mod) + "__";
+							}
+							else if ((Green - Red) == -5) {
+								Respond += "~~" + (Green-Red+Mod) + "~~";
+							}
+							else {
+								Respond += (Green-Red+Mod);
+							}
+							if (i == RollCount - 1) {
+								Respond += "**.";
+							}
+							else {
+								Respond += ", ";
+							}
+						}
+						Respond += "\nСумма: **" + Sum + "**";
+					}
+					
 					await context.Message.RespondAsync (Respond);
 					await context.Message.DeleteAsync ();
 				}
