@@ -156,7 +156,6 @@ namespace DiscordBot {
 					}
 					
 	 				if (int.TryParse (Side.Remove (0,d+1), out Sides) == true) {
-	 					int Dice = Die.Next (1,Sides+1);
 						if (Sides <= 0) {
 							RollCount = 0;
 							Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
@@ -171,6 +170,7 @@ namespace DiscordBot {
 					}
 					
 					if (RollCount == 1) {
+						int Dice = Die.Next (1,Sides+1);
 						if(Mod == 0) {
 							Respond += context.Message.Author.Mention + " кидает " + Sides + "-гранник и выкидывает **" + Dice + "**\n";
 						}
@@ -216,6 +216,8 @@ namespace DiscordBot {
 					int Mod = 0;
 					int Sum = 0;
 					string Sign = "";
+					Random GreenDie = new Random ();
+					Random RedDie = new Random ();
 					
 					if (d == 0) {
 						RollCount = 1;
@@ -243,21 +245,15 @@ namespace DiscordBot {
 						return;
 					}
 					
-					if (RollCount >= 1) {
-						Random GreenDie = new Random ();
-						Random RedDie = new Random ();
-							
+					if (RollCount == 1) {
+						
 						int Green  = GreenDie.Next (1,7);
 						int Red = RedDie.Next (1,7);
-							
 						string EmoGreenDie;
 						string EmoRedDie;
-							
 						EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
 						EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
-					}
-					
-					if (RollCount == 1) {
+						
 						if(Mod == 0) {
 							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + (Green - Red);
 						}
@@ -280,8 +276,8 @@ namespace DiscordBot {
 						Respond += context.Message.Author.Mention + " кидает кубы [" + Sign + Mod + "] " + RollCount + " раз и выкидывает **";
 						}
 						for (int i = 0; i < RollCount; i++) {
-							Green  = GreenDie.Next (1,7);
-							Red = RedDie.Next (1,7);
+							int Green  = GreenDie.Next (1,7);
+							int Red = RedDie.Next (1,7);
 							Sum += Green - Red + Mod;
 							if ((Green - Red) == 5) {
 								Respond += "__" + (Green-Red+Mod) + "__";
