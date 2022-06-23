@@ -237,10 +237,6 @@ namespace DiscordBot {
 							Sign = "+";
 						}
 					}
-					else {
-						// Защита от удаления сообщения, если это не запрос боту, а слово на d
-						return;
-					}
 					
 					if (RollCount == 1) {
 						
@@ -256,10 +252,10 @@ namespace DiscordBot {
 							SignD = "+";
 						}
 						
-						if (Message.Length == d+1) {
+						/*if (Message.Length == d+1) {
 							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + SignD + (Green - Red);
 							return;
-						}
+						}*/
 						
 						if(Mod == 0) {
 							Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + SignD + (Green - Red);
@@ -291,10 +287,10 @@ namespace DiscordBot {
 							}
 							Sum += Green - Red + Mod;
 							if ((Green - Red) == 5) {
-								Respond += "{*__" + SignD + (Green-Red+Mod) + "__*}";
+								Respond += "{__" + SignD + (Green-Red+Mod) + "__}";
 							}
 							else if ((Green - Red) == -5) {
-								Respond += "(*__" + SignD + (Green-Red+Mod) + "__*)";
+								Respond += "(__" + SignD + (Green-Red+Mod) + "__)";
 							}
 							else {
 								Respond += SignD + (Green-Red+Mod);
