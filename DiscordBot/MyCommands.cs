@@ -275,7 +275,7 @@ namespace DiscordBot {
 		
 		[Command("хард")]
 		public async Task HardNabor (CommandContext context) {
-			string Respond = context.Message.Author.Mention + "** раскидывает хардкорный набор**\n";
+			string Respond = context.Message.Author.Mention + "** раскидывает хардкорный набор**\n```";
 			
 			Random GreenDie = new Random ();
 			Random RedDie = new Random ();
@@ -307,7 +307,7 @@ namespace DiscordBot {
 				}
 				Respond += Stat[i + 4] + "\n";
 			}
-			Respond += "**Сумма: " + Sum + "**";
+			Respond += "```**Сумма: " + Sum + "**";
 
 			await context.RespondAsync (Respond);
 			await context.Message.DeleteAsync();
