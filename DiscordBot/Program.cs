@@ -309,6 +309,94 @@ namespace DiscordBot {
 					await context.Message.DeleteAsync ();
 				}
 			}
+
+			async Task RollAttackDice (DiscordClient discordClient, MessageCreateEventArgs context) {
+
+				string Message = context.Message.Content.ToLower();
+				
+				int d = Message.IndexOf("a");
+				/*формат значит классический хАу, где в данном случае:
+					х - урон к которому мы кидаем кубы
+					у - наша точность, к которой мы тоже, внезапно, кидаем кубы
+				Так как вся ебля лежит на мастере, нужно просто кинуть кубы 2 раза, один раз на точность, второй на урон
+				*/
+				if (d != -1) {
+				
+					string Respond = "";
+					int Damage = 0;
+					int Mod = 0;
+					int Sum = 0;
+					string Sign = "";
+					Random GreenDie = new Random ();
+					Random RedDie = new Random ();
+					
+					//Достаём урон, там где раньше доставали количество бросков. Урон может быть отрицательным в процессе расчётов.
+					int.TryParse (Message.Remove (d), out Damage)
+					Console.Write ("Message" + context.Message.Content + " Damage: " + Damage);
+					
+					//Достаём проверку, так как это просто модификатор, оставляетм как есть
+					if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
+						if (Mod >= 0) {
+							Sign = "+";
+						}
+					}
+					
+					
+					int Green  = GreenDie.Next (1,7);
+					int Red = RedDie.Next (1,7);
+					string SignD = "";
+					string EmoGreenDie;
+					string EmoRedDie;
+					EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
+					EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
+					
+					if(Green - Red + Mod> 0) {
+						SignD = "+";
+					}
+					
+					//Кидаем на точность
+					if(Mod == 0) {
+						Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " = **" + SignD + (Green - Red);
+					}
+					else {
+						Respond += context.Message.Author.Mention + " выкидывает " + EmoGreenDie + EmoRedDie + " | " + Green + " - " + Red + " " + Sign + Mod + " = **" + SignD + (Green - Red + Mod);
+					}
+					if ((Green - Red) == 5) {
+						Respond += ". Критический Успех";
+					}
+					else if ((Green - Red) == -5) {
+						Respond += ". Критический Провал";
+					}
+					Respond += "**\n";
+					
+					//Кидаем на урон
+					Green = GreenDie.Next (1,7);
+					Red = RedDie.Next (1,7);
+					EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
+					EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
+					
+					Damage = Green - Red + Damage;
+					
+					if(Damage <= 0) {
+						Respond += "И не наносит урона."
+					}
+					else {
+						Respond += "И наносит **" + Damage + "** урона."
+					}
+					if ((Green - Red) == 5) {
+						Respond += " **Критический Успех**";
+					}
+					else if ((Green - Red) == -5) {
+						Respond += " **Критический Провал**";
+					}
+					else {
+						Respond += " " + EmoGreenDie + EmoRedDie + "**: " + Damage + " + " + Green + " - " + Red + "**"
+					}
+					
+					await context.Message.RespondAsync (Respond);
+					await context.Message.DeleteAsync ();
+				}
+			}
 			
 			/*
 			async Task StatCheck (MessageCreateEventArgs context) {
