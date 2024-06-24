@@ -200,8 +200,8 @@ namespace DiscordBot {
 						Respond += "\nСумма: **" + Sum + "**";
 					}
 					// Не надо пытаться посылать пустой ответ
-					if (Respond !="") { 
-						await context.Message.RespondAsync (Respond);
+					if (Respond !="") {
+						await discord.SendMessageAsync (context.Channel, Respond);
 						await context.Message.DeleteAsync ();
 					}
 				}
@@ -309,7 +309,7 @@ namespace DiscordBot {
 						Respond += "\nСумма: **" + Sum + "**";
 					}
 					
-					await context.Message.RespondAsync (Respond);
+					await discord.SendMessageAsync (context.Channel, Respond);
 					await context.Message.DeleteAsync ();
 				}
 			}
@@ -398,7 +398,7 @@ namespace DiscordBot {
 						Respond += " " + EmoGreenDie + EmoRedDie + "** | " + DamageBase + " + " + Green + " - " + Red + "**";
 					}
 					
-					await context.Message.RespondAsync (Respond);
+					await discord.SendMessageAsync (context.Channel, Respond);
 					await context.Message.DeleteAsync ();
 				}
 			}
