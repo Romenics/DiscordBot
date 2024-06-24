@@ -143,31 +143,35 @@ namespace DiscordBot {
 	 					Mod = 0;
 	 					Side = Message;
 	 				}
-				
-					if (d == 0) {
-						RollCount = 1;
-					}
-					else {
-						if (int.TryParse (Message.Remove (d), out RollCount) == true) {
-							if (RollCount <= 0)  {
+
+					if (Message.Count(c => char.ToLower(c) == 'r') == 1 && Message.All(c => char.ToLower(c) == 'r' || char.IsDigit(c) || c == '-' || c == '+')) {
+					    
+					
+						if (d == 0) {
+							RollCount = 1;
+						}
+						else {
+							if (int.TryParse (Message.Remove (d), out RollCount) == true) {
+								if (RollCount <= 0)  {
+									RollCount = 0;
+									Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
+								}
+							}
+						}
+						
+		 				if (int.TryParse (Side.Remove (0,d+1), out Sides) == true) {
+							if (Sides <= 0) {
 								RollCount = 0;
 								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
 							}
-						}
-					}
-					
-	 				if (int.TryParse (Side.Remove (0,d+1), out Sides) == true) {
-						if (Sides <= 0) {
+		 				}
+						else {
 							RollCount = 0;
-							Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
 						}
-	 				}
-					else {
-						RollCount = 0;
-					}
-					
-					if ((Message.Length == d+1) || (Message.Length == s+1) || (s == d+1))  {
-						RollCount = 0;
+						
+						if ((Message.Length == d+1) || (Message.Length == s+1) || (s == d+1))  {
+							RollCount = 0;
+						}
 					}
 					
 					if (RollCount == 1) {
@@ -222,25 +226,31 @@ namespace DiscordBot {
 					string Sign = "";
 					Random GreenDie = new Random ();
 					Random RedDie = new Random ();
-					
-					if (d == 0) {
-						RollCount = 1;
-					}
-					else {
-						if (int.TryParse (Message.Remove (d), out RollCount) == true) {
-							if (RollCount <= 0) {
-								RollCount = 0;
-								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
+
+					if (Message.Count(c => char.ToLower(c) == 'd') == 1 && Message.All(c => char.ToLower(c) == 'd' || char.IsDigit(c) || c == '-' || c == '+')) {
+											
+						if (d == 0) {
+							RollCount = 1;
+						}
+						else {
+							if (int.TryParse (Message.Remove (d), out RollCount) == true) {
+								if (RollCount <= 0) {
+									RollCount = 0;
+									Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
+								}
 							}
 						}
+						Console.Write ("Message" + context.Message.Content + " RollCount: " + RollCount);
 					}
-					Console.Write ("Message" + context.Message.Content + " RollCount: " + RollCount);
-					
+
+
 					if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
 						if (Mod >= 0) {
 							Sign = "+";
 						}
 					}
+
+					
 					
 					if (RollCount == 1) {
 						
@@ -335,25 +345,24 @@ namespace DiscordBot {
 					string Sign = "";
 					Random GreenDie = new Random ();
 					Random RedDie = new Random ();
-
 					int RollCount = 0;
-					if (d == 0) {
-						RollCount = 1;
+					
+					//Достаём урон, там где раньше доставали количество бросков. Урон может быть отрицательным в процессе расчётов.
+					int.TryParse (Message.Remove (d), out Damage);
+					Console.Write ("Message" + context.Message.Content + " Damage: " + Damage);
+					
+					//Достаём проверку, так как это просто модификатор, оставляетм как есть
+					if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
+						if (Mod >= 0) {
+							Sign = "+";
+						}
 					}
 
+					if (Message.Count(c => char.ToLower(c) == 'a') == 1 && Message.All(c => char.ToLower(c) == 'a' || char.IsDigit(c) || c == '-' || c == '+')) {
+					    RollCount = 1;
+					}
+					
 					if (RollCount == 1) {
-						//Достаём урон, там где раньше доставали количество бросков. Урон может быть отрицательным в процессе расчётов.
-						int.TryParse (Message.Remove (d), out Damage);
-						Console.Write ("Message" + context.Message.Content + " Damage: " + Damage);
-						
-						//Достаём проверку, так как это просто модификатор, оставляетм как есть
-						if (int.TryParse (Message.Remove (0,d+1), out Mod) == true) {
-							if (Mod >= 0) {
-								Sign = "+";
-							}
-						}
-						
-						
 						int Green  = GreenDie.Next (1,7);
 						int Red = RedDie.Next (1,7);
 						string SignD = "";
