@@ -328,6 +328,7 @@ namespace DiscordBot {
 				
 					string Respond = "";
 					int Damage = 0;
+					int DamageBase = 0;
 					int Mod = 0;
 					string Sign = "";
 					Random GreenDie = new Random ();
@@ -377,7 +378,8 @@ namespace DiscordBot {
 					Red = RedDie.Next (1,7);
 					EmoGreenDie = DiscordEmoji.FromName(discordClient, ":g" + Green + ":", true).ToString();
 					EmoRedDie   = DiscordEmoji.FromName(discordClient, ":r" + Red + ":", true).ToString();
-					
+
+					DamageBase = Damage;
 					Damage = Green - Red + Damage;
 					
 					if(Damage <= 0) {
@@ -393,7 +395,7 @@ namespace DiscordBot {
 						Respond += " **Критический Провал**";
 					}
 					else {
-						Respond += " " + EmoGreenDie + EmoRedDie + "**: " + Damage + " + " + Green + " - " + Red + "**";
+						Respond += " " + EmoGreenDie + EmoRedDie + "** | " + DamageBase + " + " + Green + " - " + Red + "**";
 					}
 					
 					await context.Message.RespondAsync (Respond);
