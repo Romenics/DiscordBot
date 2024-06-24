@@ -76,6 +76,7 @@ namespace DiscordBot {
 			discord.MessageCreated		 += RollDice;
 			discord.MessageCreated		 += RollXDice;
 			discord.MessageCreated		 += TolpojDS;
+			discord.MessageCreated		 += RollAttackDice;
 
 
 			async Task Clock (DiscordClient discordClient, MessageReactionAddEventArgs context) {
@@ -198,8 +199,11 @@ namespace DiscordBot {
 						}
 						Respond += "\nСумма: **" + Sum + "**";
 					}
-					await context.Message.RespondAsync (Respond);
-					await context.Message.DeleteAsync ();
+					// Не надо пытаться посылать пустой ответ
+					if (Respond !="") { 
+						await context.Message.RespondAsync (Respond);
+						await context.Message.DeleteAsync ();
+					}
 				}
 			}
 			
@@ -325,13 +329,12 @@ namespace DiscordBot {
 					string Respond = "";
 					int Damage = 0;
 					int Mod = 0;
-					int Sum = 0;
 					string Sign = "";
 					Random GreenDie = new Random ();
 					Random RedDie = new Random ();
 					
 					//Достаём урон, там где раньше доставали количество бросков. Урон может быть отрицательным в процессе расчётов.
-					int.TryParse (Message.Remove (d), out Damage)
+					int.TryParse (Message.Remove (d), out Damage);
 					Console.Write ("Message" + context.Message.Content + " Damage: " + Damage);
 					
 					//Достаём проверку, так как это просто модификатор, оставляетм как есть
@@ -378,10 +381,10 @@ namespace DiscordBot {
 					Damage = Green - Red + Damage;
 					
 					if(Damage <= 0) {
-						Respond += "И не наносит урона."
+						Respond += "И не наносит урона.";
 					}
 					else {
-						Respond += "И наносит **" + Damage + "** урона."
+						Respond += "И наносит **" + Damage + "** урона.";
 					}
 					if ((Green - Red) == 5) {
 						Respond += " **Критический Успех**";
@@ -390,7 +393,7 @@ namespace DiscordBot {
 						Respond += " **Критический Провал**";
 					}
 					else {
-						Respond += " " + EmoGreenDie + EmoRedDie + "**: " + Damage + " + " + Green + " - " + Red + "**"
+						Respond += " " + EmoGreenDie + EmoRedDie + "**: " + Damage + " + " + Green + " - " + Red + "**";
 					}
 					
 					await context.Message.RespondAsync (Respond);
