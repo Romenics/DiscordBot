@@ -126,6 +126,8 @@ namespace DiscordBot {
 					string Sign = "";
 					string Side = "";
 					Random Die = new Random ();
+					int countC = 0;
+					int validC = 1;
 					
 					if (s == -1) {
 	 					s = Message.IndexOf ("-");
@@ -144,9 +146,17 @@ namespace DiscordBot {
 	 					Side = Message;
 	 				}
 
-					if (Message.Count(c => char.ToLower(c) == 'r') == 1 && Message.All(c => char.ToLower(c) == 'r' || char.IsDigit(c) || c == '-' || c == '+')) {
-					    
+					foreach (char c in Message) {
+						if (char.toLower(c) == 'r') {
+							countC++;
+						} else if (!char.IsDigit(c) && c != '+' && c != '-') {
+							validC = 0;
+							break;
+						}
+					}
 					
+					if (countC == 1 && validC == 1) {
+						
 						if (d == 0) {
 							RollCount = 1;
 						}
@@ -226,9 +236,20 @@ namespace DiscordBot {
 					string Sign = "";
 					Random GreenDie = new Random ();
 					Random RedDie = new Random ();
+					int countC = 0;
+					int validC = 1;
 
-					if (Message.Count(c => char.ToLower(c) == 'd') == 1 && Message.All(c => char.ToLower(c) == 'd' || char.IsDigit(c) || c == '-' || c == '+')) {
-											
+					foreach (char c in Message) {
+						if (char.toLower(c) == 'd') {
+							countC++;
+						} else if (!char.IsDigit(c) && c != '+' && c != '-') {
+							validC = 0;
+							break;
+						}
+					}
+					
+					if (countC == 1 && validC == 1) {
+						
 						if (d == 0) {
 							RollCount = 1;
 						}
@@ -346,6 +367,8 @@ namespace DiscordBot {
 					Random GreenDie = new Random ();
 					Random RedDie = new Random ();
 					int RollCount = 0;
+					int countC = 0;
+					int validC = 1;
 					
 					//Достаём урон, там где раньше доставали количество бросков. Урон может быть отрицательным в процессе расчётов.
 					int.TryParse (Message.Remove (d), out Damage);
@@ -358,8 +381,18 @@ namespace DiscordBot {
 						}
 					}
 
-					if (Message.Count(c => char.ToLower(c) == 'a') == 1 && Message.All(c => char.ToLower(c) == 'a' || char.IsDigit(c) || c == '-' || c == '+')) {
-					    RollCount = 1;
+
+					foreach (char c in Message) {
+						if (char.toLower(c) == 'a') {
+							countC++;
+						} else if (!char.IsDigit(c) && c != '+' && c != '-') {
+							validC = 0;
+							break;
+						}
+					}
+					
+					if (countC == 1 && validC == 1) {
+						RollCount = 1;
 					}
 					
 					if (RollCount == 1) {
