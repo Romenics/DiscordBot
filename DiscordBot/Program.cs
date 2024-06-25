@@ -147,7 +147,7 @@ namespace DiscordBot {
 	 				}
 
 					foreach (char c in Message) {
-						if (char.toLower(c) == 'r') {
+						if (char.ToLower(c) == 'r') {
 							countC++;
 						} else if (!char.IsDigit(c) && c != '+' && c != '-') {
 							validC = 0;
@@ -226,9 +226,8 @@ namespace DiscordBot {
 				string Message = context.Message.Content.ToLower();
 				
 				int d = Message.IndexOf("d");
-				
+
 				if (d != -1) {
-				
 					string Respond = "";
 					int RollCount = 0;
 					int Mod = 0;
@@ -240,7 +239,7 @@ namespace DiscordBot {
 					int validC = 1;
 
 					foreach (char c in Message) {
-						if (char.toLower(c) == 'd') {
+						if (char.ToLower(c) == 'd') {
 							countC++;
 						} else if (!char.IsDigit(c) && c != '+' && c != '-') {
 							validC = 0;
@@ -249,7 +248,6 @@ namespace DiscordBot {
 					}
 					
 					if (countC == 1 && validC == 1) {
-						
 						if (d == 0) {
 							RollCount = 1;
 						}
@@ -339,7 +337,7 @@ namespace DiscordBot {
 						}
 						Respond += "\nСумма: **" + Sum + "**";
 					}
-					
+					Console.WriteLine("Respond: " + Respond);
 					if (Respond !="") {
 						await discord.SendMessageAsync (context.Channel, Respond);
 						await context.Message.DeleteAsync ();
@@ -383,7 +381,7 @@ namespace DiscordBot {
 
 
 					foreach (char c in Message) {
-						if (char.toLower(c) == 'a') {
+						if (char.ToLower (c) == 'a') {
 							countC++;
 						} else if (!char.IsDigit(c) && c != '+' && c != '-') {
 							validC = 0;
