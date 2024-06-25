@@ -119,7 +119,7 @@ namespace DiscordBot {
 				
 					string Respond = "";
 					int RollCount = 0;
-					int s = Message.IndexOf("+");
+					int s = Message.LastIndexOf("+");
 					int Mod = 0;
 					int Sides = 0;
 					int Sum = 0;
@@ -130,7 +130,7 @@ namespace DiscordBot {
 					int validC = 1;
 					
 					if (s == -1) {
-	 					s = Message.IndexOf ("-");
+	 					s = Message.LastIndexOf ("-");
 	 				}
 	 				
 	 				if (s != -1) {
@@ -424,7 +424,8 @@ namespace DiscordBot {
 						Damage = Green - Red + Damage;
 						
 						if(Damage <= 0) {
-							Respond += "И не наносит урона.";
+							Respond += "И **не** наност урон.";
+							Respond += " " + EmoGreenDie + EmoRedDie + " | " + DamageBase + " + " + Green + " - " + Red + " = **" + Damage + "**";
 						}
 						else {
 							Respond += "И наносит урон. ";
