@@ -175,13 +175,6 @@ namespace DiscordBot {
 								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
 							}
 		 				}
-						else {
-							RollCount = 0;
-						}
-						
-						if ((Message.Length == d+1) || (Message.Length == s+1) || (s == d+1))  {
-							RollCount = 0;
-						}
 					}
 					
 					if (RollCount == 1) {
@@ -434,16 +427,14 @@ namespace DiscordBot {
 							Respond += "И не наносит урона.";
 						}
 						else {
-							Respond += "И наносит **" + Damage + "** урона.";
+							Respond += "И наносит урон. ";
+							Respond += " " + EmoGreenDie + EmoRedDie + " | " + DamageBase + " + " + Green + " - " + Red + " = **" + Damage + "**";
 						}
 						if ((Green - Red) == 5) {
-							Respond += " **Критический Успех**";
+							Respond += " **. Критический Успех**";
 						}
 						else if ((Green - Red) == -5) {
-							Respond += " **Критический Провал**";
-						}
-						else {
-							Respond += " " + EmoGreenDie + EmoRedDie + "** | " + DamageBase + " + " + Green + " - " + Red + "**";
+							Respond += " **. Критический Провал**";
 						}
 
 					}
