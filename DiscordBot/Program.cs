@@ -133,7 +133,7 @@ namespace DiscordBot {
 	 					s = Message.LastIndexOf ("-");
 	 				}
 	 				
-	 				if (s != -1) {
+	 				if (s > d+1) {
 	 					if (int.TryParse (Message.Remove (0,s), out Mod) == true) {
 	 						if (Mod > 0) {
 	 							Sign = "+";
