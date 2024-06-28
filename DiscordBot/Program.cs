@@ -175,6 +175,10 @@ namespace DiscordBot {
 								Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
 							}
 		 				}
+						else {
+							RollCount = 0;
+							Respond = context.Message.Author.Mention + " роняет кубы, выкидывает **-11** и страдает. За тупость.\n";
+						}
 					}
 					
 					if (RollCount == 1) {
