@@ -15,6 +15,8 @@ namespace DiscordBot {
 
 	public class Program {
 		
+		public static string Version = "2024.06.28f1" ;
+
 		public static DiscordClient discord;
 
 		static CommandsNextExtension commands;

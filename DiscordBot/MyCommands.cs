@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using System.IO;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using System.Threading.Channels;
 
 
 namespace DiscordBot {
@@ -48,7 +49,15 @@ namespace DiscordBot {
 
 			await context.Message.DeleteAsync();
 
+		}		
+		
+		[Command ("version")]
+		public async Task Version (CommandContext context) {
+
+			await  Program.discord.SendMessageAsync(context.Channel, "Build stamp: " + Program.Version);
+			await context.Message.DeleteAsync();
 		}
+
 
 		[Command ("invite")]
 		public async Task Invite (CommandContext context) {
